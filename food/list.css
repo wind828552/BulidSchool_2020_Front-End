@@ -1,0 +1,80 @@
+/* 第四層 */
+.list{
+    width: 100%;
+    display: flex;
+    margin-top: 50px;
+    margin-bottom: 30px;
+}
+.list div{
+    width: 250px;
+    height: 250px;
+    margin: 10px;
+    transform: scale(0.8);
+}
+.list div:hover{
+    /* border: 1px solid gray; */
+    box-shadow: 5px 5px 5px 5px #888888;
+    transform: scale(0.8);
+    transition: 0.5s;
+    color: yellow;
+    cursor: pointer;
+}
+.list .list1{
+    position: relative;
+}
+.list .list2{
+    position: relative;
+}
+.list .list3{
+    position: relative;
+}
+.list .list4{
+    position: relative;
+}
+.list .list5{
+    position: relative;
+}
+.list .list6{
+    position: relative;
+}
+.list .list1 h3{
+    position: absolute;
+    font-size: 30px;
+    top: 150px;
+    right: 40px;
+}
+.list .list2 h3{
+    position: absolute;
+    font-size: 30px;
+    top: 150px;
+    right: 65px;
+}
+.list .list3 h3{
+    position: absolute;
+    font-size: 30px;
+    top: 150px;
+    right: 90px;
+}
+.list .list4 h3{
+    position: absolute;
+    font-size: 30px;
+    top: 150px;
+    right: 20px;
+}
+.list .list5 h3{
+    position: absolute;
+    font-size: 30px;
+    top: 150px;
+    right: 75px;
+
+}
+.list .list6 h3{
+    position: absolute;
+    font-size: 30px;
+    top: 150px;
+    right: 75px;
+}
+.list img{
+    width: 100%;
+    position: relative;
+}

@@ -1,0 +1,47 @@
+/* 第七層 */
+.fresh{
+    width: 1200px;
+    margin: auto;
+    display: flex;
+    margin-top: 100px;
+}
+.fresh.Discount,.grape{
+    margin-top: 100px;
+    margin-left: 300px;
+}
+.fresh .Discount{
+    width: 500px;
+    height: 400px;
+    margin-left: 20px;
+    padding: 50px;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    box-shadow: -5px -5px 0px 0px whitesmoke;
+}
+.fresh .Discount h1{
+    font-size: 70px;
+}
+.fresh .Discount p{
+    font-size: 70px;
+    /* position: absolute; */
+    margin-top: -60px;
+    margin-bottom: 40px;
+}
+.fresh .Discount a{
+    width: 120px;
+    height: 40px;
+    font-size: 15px;
+    color: black;
+    background-color: rgb(255, 238, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 150px;
+    position: absolute;
+    border-radius: 5px;
+    text-decoration: none;
+}

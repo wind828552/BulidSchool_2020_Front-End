@@ -1,0 +1,109 @@
+.car-Introduction-design{
+    max-width: 960px;
+    height: 776px;
+    margin: auto;
+    position: relative;
+    margin-top: 140px;
+}
+
+.car-Introduction-design .car img{
+    width: 695px;
+    height: 430px;
+    position: absolute;
+    top: 100px;
+    left: 175px;
+    /* position: relative; */
+}
+.car-Introduction-design .car{
+    display: flex;
+    justify-content: center;
+}
+.car-Introduction-design .car , .play:hover{
+    cursor: pointer;
+}
+
+.car-Introduction-design .design{
+    width: 355px;
+    height: 388px;
+    background-color: black;
+    position: relative;
+    z-index: 2;
+}
+.car-Introduction-design .design .title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: red;
+    width: 355px;
+    height: 100px;
+}
+.car-Introduction-design .design .title h1{
+    font-size: 100px;
+    color: white;
+}
+.car-Introduction-design .design .title h2{
+    font-size: 60px;
+    color: white;
+}
+.car-Introduction-design .design .txt h3{
+    font-size: 25px;
+    color: white;
+    padding: 30px 20px 10px;
+}
+.car-Introduction-design .design .txt p{
+    font-size: 20px;
+    color: white;
+    padding: 5px 20px;
+    line-height: 35px;
+}
+
+.car-Introduction-design .blank{
+    width: 439px;
+    height: 290px;
+    background-color: whitesmoke;
+    position: absolute;
+    top: 50px;
+    right: 0;
+}
+
+.car-Introduction-design .play{
+    position: absolute;
+    top: 300px;
+    right: 80px;
+}
+
+.car-Introduction-design .Introduction{
+    width: 682px;
+    height: 200px;
+    background-color: whitesmoke;
+    z-index: 2;
+    position: relative;
+    top: 110px;
+    left: 50px;
+}
+.car-Introduction-design .Introduction h3{
+    font-size: 18px;
+    color: rgb(172, 13, 13);
+    padding: 20px;
+}
+.car-Introduction-design .Introduction h3::after{
+    content: ' ————————————————————————';
+}
+.car-Introduction-design .Introduction h4{
+    font-size: 15px;
+    color: white;
+    background-color: black;
+    width: 120px;
+    text-align: center;
+    padding: 5px 0px;
+    border-radius: 5px;
+    letter-spacing: 2px;
+    margin-left: 20px;
+}
+.car-Introduction-design .Introduction p{
+    margin-left: 15px;
+    padding: 5px 10px;
+}
+.car-Introduction-design .Introduction p::before{
+    content: '．';
+}

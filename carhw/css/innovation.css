@@ -1,0 +1,27 @@
+.innovation{
+    width: 900px;
+    margin: auto;
+    margin-top: 100px;
+}
+.innovation img{
+    width: 100%;
+}
+.innovation div{
+    background-color: black;
+    color: white;
+    width: 285px;
+    height: 86px;
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    margin-top: 30px;
+}
+.innovation div p{
+    background-color: red; 
+    width: 200px;
+    height: 40px;
+    display: flex;
+    justify-content: flex-end;
+    padding: 5px 20px 5px 0px;
+}

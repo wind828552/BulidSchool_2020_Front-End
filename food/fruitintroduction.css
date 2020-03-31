@@ -1,0 +1,39 @@
+/* 第三層 */
+.fruitintroduction{
+    width: 100%;
+    margin: auto;
+    margin-top: 15px;
+    display: flex;
+}
+.fruit1 img{
+    width: 100%;
+}
+.fruit2{
+    padding-left: 50px;
+}
+.fruit1 .fruit2{
+    width: 50%;
+}
+.fruit2 h1{
+    font-size: 80px;
+}
+.fruit2 h2{
+    font-size: 60px;
+    color: yellow;
+}
+.button{
+    width: 220px;
+    height: 70px;
+    text-align: center;
+    line-height: 70px;
+    background-color: black;
+    color: white;
+    font-size: 25px;
+    border-radius: 8px;
+}
+.button:hover{
+    color: black;
+    background-color: yellow;
+    transition: .5s;
+    cursor: pointer;
+}

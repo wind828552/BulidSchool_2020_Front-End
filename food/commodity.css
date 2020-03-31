@@ -1,0 +1,55 @@
+/* 第六層 */
+/* 商品 */
+.commodity{
+    /* background-color: burlywood; */
+    width: 1200px;
+    margin: auto;
+    /* background-color: aqua; */
+}
+/* 商品標題 */
+.commodity .title{
+    font-size: 20px;
+    text-align: center;
+    padding-top: 100px;
+}
+.commodity .product-list{
+    display: flex;
+    width: 100%;
+    margin: auto;
+    margin: 0 20px;
+}
+.commodity .item{
+    width: 25%;
+}
+.commodity .item .money{
+    font-size: 20px;
+}
+.commodity .item .money .delete{
+    color: rgb(128, 128, 128);
+    text-decoration: line-through;
+}
+.commodity .item img{
+    background-color: whitesmoke;
+}
+.shop button{
+    margin: 0px 5px;
+}
+.commodity .car{
+    width: 150px;
+    height: 40px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+.commodity .eye,.love{
+    width: 40px;
+    height: 40px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+.commodity button:hover{
+    color: black;
+    background-color: yellow;
+    cursor: pointer;
+}

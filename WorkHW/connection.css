@@ -1,0 +1,94 @@
+/* 第一層 */
+*{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.connection-wrap{
+    width: 100%;
+    margin: auto;
+    padding: 20px 0px;
+    background-color: #272727;
+    color: white;
+}
+/* 調整地址區塊 */
+.address{
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+    font-size: 16px;
+}
+/* 調整手機區塊 */
+.phone{
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+    font-size: 16px;
+}
+/* 調整社群區塊 */
+.community{
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+    font-size: 16px;
+}
+/* 調整圖標顏色 */
+.address i, .phone i{
+    color: #2ac5f4;
+}
+.community i{
+    color: white;
+    margin: 0 10px;
+}
+.phone a{
+    color: white;
+    text-decoration: none;
+}
+.connection-wrap{
+    z-index: 1;
+}
+@media screen and (min-width: 768px){
+    .address_phone{
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+    }
+    .connection-wrap{
+        padding: 0;
+    }
+    .community{
+        margin-top: 0;
+        margin-bottom: 0px;
+        padding-bottom: 10px;
+    }
+}
+@media screen and (min-width: 1200px){
+    .connection-wrap{
+        /* width: 100%; */
+        display: flex;
+        /* justify-content: flex-start; */
+        background-color: #272727;
+    }
+    .connection-sort{
+        margin: auto;
+    }
+    .community{
+        align-items: center;
+        margin-right: 80px;
+    }
+    .address{
+        font-size: 16px;
+    }
+    .phone{
+        margin-left: 30px;
+        font-size: 16px;
+    }
+    .address_phone{
+        width: 100%;
+        margin-left: 80px;
+        display: flex;
+        justify-content: flex-start;
+    }
+    }
+

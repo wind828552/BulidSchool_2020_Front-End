@@ -1,0 +1,159 @@
+div[class*='col'] {
+    box-sizing: border-box;
+    margin: 0px;
+}
+
+.company-information-container{
+    background-color: rgba(0, 0, 0, 0.849);
+    padding: 50px 0px;
+    margin-top: 100px;
+}
+.company-information-container .row{
+    display: flex;
+    flex-wrap: wrap;
+
+}
+
+
+
+.company-information-container .row img{
+    margin-bottom: 10px;
+}
+.company-information-container .row .company-txt p{
+    color: gray;
+    line-height: 20px;
+}
+
+.company-information-container .row h3{
+    margin-top: 40px;
+    color: white;
+}
+.company-information-container .li{
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    line-height: 25px;
+}
+.company-information-container .li a{
+    color: rgb(0, 217, 255);
+    text-decoration: none;
+}
+.company-information-container .li a:hover{
+    color: white;
+    transition: .5s;
+}
+.company-information-container .li .one{
+    color: white;
+}
+.company-information-container .commnets-txt{
+    display: flex;
+    flex-direction: column;
+}
+.company-information-container .commnets-txt .txt{
+    margin-top: 25px;
+    text-decoration: none;
+    color: white;
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.company-information-container .link{
+    margin-top: 15px;
+    color: gray;
+}
+.company-information-container .link a{
+    text-decoration: none;
+    color: gray;
+}
+.company-information-container .commnets-txt a:hover{
+    color: rgb(0, 183, 255);
+}
+.company-information-container .contacts span{
+    display: flex;
+    flex-direction: column;
+    color: gray;
+    margin: 20px 0;
+}
+.company-information-container .contacts{
+    margin: 25px 0px;
+}
+.company-information-container a{
+    text-decoration: none;
+    color: rgb(0, 162, 255);
+}
+
+@media screen and (min-width: 768px){
+    .col-md-2{ width: 16.666666%; }
+    .col-md-1{ width: 8.333333%; } 
+    .col-md-3{ width: 25%; }
+    .col-md-4{ width: 33.333333%; }
+    .col-md-5{ width: 41.666666%; }
+    .col-md-6{ width: 50%; }
+    .col-md-7{ width: 58.333333%; }
+    .col-md-8{ width: 66.666666%; }
+    .col-md-9{ width: 75%; }
+    .col-md-10{ width: 83.333333%; }
+    .col-md-11{ width: 91.666666%; }
+    .col-md-12{ width: 100%; }
+
+    .company-information-container{
+        padding: 80px 50px;
+    }
+
+    }
+
+    /* 桌機 */
+    @media screen and (min-width: 1200px){
+    .col-xl-2{ width: 16.666666%; }
+    .col-xl-1{ width: 8.333333%; } 
+    .col-xl-3{ width: 25%; }
+    .col-xl-4{ width: 33.333333%; }
+    .col-xl-5{ width: 41.666666%; }
+    .col-xl-6{ width: 50%; }
+    .col-xl-7{ width: 58.333333%; }
+    .col-xl-8{ width: 66.666666%; }
+    .col-xl-9{ width: 75%; }
+    .col-xl-10{ width: 83.333333%; }
+    .col-xl-11{ width: 91.666666%; }
+    .col-xl-12{ width: 100%; }
+
+    .company-information-container{
+        padding: 100px 100px;
+    }
+    .company-information-container .phine{
+        margin: 0px;
+    }
+
+    }
+
+
+
+    .Community-wrap{
+        width: 100%;
+        padding: 15px 0px;
+        background-color: black;
+    }
+    .Community-wrap .row{
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .Community-wrap .row .Manufax ,.Community{
+        display: flex;
+        justify-content: center;
+    }
+    .Community-wrap .row span{
+        display: flex;
+        flex-wrap: nowrap;
+    }
+    .Community-wrap .row span p{
+        color: gray;
+    }
+    .Community-wrap .row span a{
+        color: rgb(0, 119, 255);
+        text-decoration: none;
+        margin-left: 10px;
+    }
+    .Community-wrap .row .Community a{
+        color: white;
+        letter-spacing: 3px;
+    }

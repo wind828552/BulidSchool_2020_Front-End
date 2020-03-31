@@ -1,0 +1,25 @@
+/* 第九層 */
+.FeaturedPosts{
+    width: 1200px;
+    margin: auto;
+}
+.FeaturedPosts .title{
+    font-size: 20px;
+    text-align: center;
+    margin-top: 140px;
+    margin-bottom: 70px;
+}
+.FeaturedPosts .FeaturedPosts-commidity{
+    width: 350px;
+    display: flex;
+}
+.FeaturedPosts .FeaturedPosts-commidity .item{
+    margin: 0px 25px;
+}
+.FeaturedPosts .FeaturedPosts p{
+    font-size: 15px;
+    color: rgb(128, 128, 128);
+}
+.FeaturedPosts .FeaturedPosts-commidity .item .li{
+    list-style: none;
+}

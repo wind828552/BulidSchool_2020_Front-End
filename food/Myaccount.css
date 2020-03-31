@@ -1,0 +1,33 @@
+/* 第一層 */
+.Myaccount{
+    width: 100%;
+    display: flex;
+    border-bottom: 1px solid gray;
+    /* position: relative; */
+    align-items: center;
+    /* justify-content: flex-start; */
+}
+.Myaccount h2{
+    /* 使用固定定位使My account浮起來部會被擠下去 */
+    /* position: absolute; */
+    width: 180px;
+    color: black;
+    margin-left: 150px;
+}
+.Myaccount a{
+    text-decoration: none;
+}
+.Myaccount h2:hover{
+    color: yellow;
+    transition:.5s;
+}
+
+.Myaccount nav{
+    text-align: right;
+    width: 100%;
+    margin-right: 150px;
+}
+.Myaccount nav a{
+    color: black;
+    margin: 15px;
+}

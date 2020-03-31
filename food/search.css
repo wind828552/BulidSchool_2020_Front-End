@@ -1,0 +1,50 @@
+/* 第八層 */
+.search{
+    width: 1200px;
+    display: flex;
+    margin: auto;
+    margin-top: 100px;
+}
+.search .speccial{
+    margin-left: 18px;
+}
+.search .search-commodity-item{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.search .search-commodity h3{
+    width: 100%;
+    font-size: 25px;
+    text-align: center;
+}
+.search .search-commodity-item .item{
+    margin-left: 30px;
+    margin-top: 25px;
+}
+.search .search-commodity-item .item-item1{
+    margin-left: 30px;
+    margin-top: 65px;
+}
+.search .search-commodity-item img{
+    background-color: whitesmoke;
+}
+.search .search-commodity-item .car{
+    width: 150px;
+    height: 40px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+.search .search-commodity-item .eye,.love{
+    width: 40px;
+    height: 40px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+.search .search-commodity-item button:hover{
+    color: black;
+    background-color: yellow;
+    cursor: pointer;
+}
