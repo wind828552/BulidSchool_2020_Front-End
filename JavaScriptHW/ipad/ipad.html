@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://kit.fontawesome.com/57b8d30415.js" crossorigin="anonymous"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <style type="text/css">
+        button{
+            width: 200px;
+            height: 100px;
+            background-color: white;
+            border-radius: 5px;
+            border: 1px solid rgb(199, 197, 197);
+            margin: 5px;
+        }
+        h4{
+            text-align: center;
+        }
+    </style>
+
+    </head>
+
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-xl-6 d-flex justify-content-center">
+                <img id="img" src="pic/ipad-hero-unselected-201909_GEO_TW.png" alt="">
+            </div>  
+            <div class="col-12 col-xl-6">
+                <div class="item text-center">
+                    <h1><strong>購買 iPad</strong></h1>
+                    <p>購買 iPad 可享免額外付費運送服務</p>
+                </div>
+                <div class="item">
+                    <h4 class="text-center"><strong>外觀</strong></h4>
+                    <div class="d-flex justify-content-center">
+                        <button id="gray"><i class="fas fa-circle d-block" style="color: gray; font-size: 30px;"></i>太空灰色</button>
+                        <button id="silver"><i class="fas fa-circle d-block" style="color: silver; font-size: 30px"></i>銀色</button>
+                        <button id="golden"><i class="fas fa-circle d-block" style="color: pink; font-size: 30px"></i>玫瑰金色</button>
+                    </div>
+                </div>
+                <div class="item">
+                    <h4><strong>儲存裝置</strong></h4>
+                    <div class="d-flex justify-content-center">
+                        <button onclick="ipad32G()">32G<br>NT$10,900起</button>
+                        <button onclick="ipad128G()">128G<br>NT$13,900起</button>
+                    </div>
+                </div>
+                <div class="item">
+                    <h4><strong>連線能力</strong></h4>
+                    <div class="d-flex justify-content-center">
+                        <button onclick="wifi()">Wi-Fi<br>NT$13,900起</button>
+                        <button onclick="mobilenetwork()">Wi-Fi + 行動網路<br>NT$18,400起</button>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <p id="connectprice" style="font-size: 20px;">$0</p>
+                    </div>
+                </div>
+            </div>  
+        </div>
+    </div>
+
+    <script>
+
+        var product = {
+            ipad:{
+                    colors:[
+                        { color: "gray" , url:"pic/ipad-cell-select-space-201909_GEO_TW.png" },
+                        { color: "silver" , url:"pic/ipad-cell-select-silver-201909_GEO_TW.png" },
+                        { color: "golden" , url:"pic/ipad-cell-select-gold-201909_GEO_TW.png" }
+                    ],
+                    // capacitys:[
+                    //     { capacity: "32G" , money:"10900" },
+                    //     { capacity: "128G" , money:"13900" }
+                    // ],
+                    // connects:[
+                    //     { connect:"Wifi" , money:"13900" },
+                    //     { connect:"Mobilenetwork" , money:"18400" }
+                    // ],
+                }
+            };
+            // ------------------------灰色-------------------------------
+            //取得按鈕的控制 
+            var btngray = document.getElementById("gray");
+            //當我點下這個按鈕的時候 去執行底下changeimg()的方法 執行圖片置換
+            btngray.onclick = 
+            function changeimg(){
+                //取得img的的控制
+                var img = document.getElementById("img");
+                //對圖片進行設定更新 ('屬性','值') 值裡面再塞一個方法 根據我的規定去尋找要更新的東西
+                img.setAttribute('src',Geturl('gray'));
+            }
+            // var urlresult = product.ipad.colors[0].url;
+            //方法傳入key值 如果key等於color 就回傳所要的值
+            function Geturl(key){
+                //宣告變數裝結果值
+                let result;
+                //路徑 用forEach一個一個傳進來做比較
+                product.ipad.colors.forEach((e)=>{
+                    if(e.color == key ) 
+                    result = e.url
+                })
+                return result;
+            }
+            //--------------------銀色---------------------------
+            var btnsilver = document.getElementById('silver');
+            btnsilver.onclick = 
+            function changeimg(){
+                var img = document.getElementById('img');
+                img.setAttribute('src',Geturl('silver'));
+            }
+
+            function Geturl(key){
+                let result;
+                product.ipad.colors.forEach((e)=>{
+                    if(e.color == key) result = e.url
+                })
+                return result;
+            }
+            //----------------------金色--------------------------
+            var btnsilver = document.getElementById('golden');
+            btnsilver.onclick = 
+            function changeimg(){
+                var img = document.getElementById('img');
+                img.setAttribute('src',Geturl('golden'));
+            }
+
+            function Geturl(key){
+                let result;
+                product.ipad.colors.forEach((e)=>{
+                    if(e.color == key) result = e.url
+                })
+                return result;
+            }
+            //----------------------------------------------
+            var connectprice = document.getElementById('connectprice');
+
+            function wifi(){
+                connectprice.innerHTML = "$13900";
+            }
+            function mobilenetwork(){
+                connectprice.innerHTML = "$18400";
+            }
+
+    </script>
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

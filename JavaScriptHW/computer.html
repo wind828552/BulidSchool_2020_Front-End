@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/css">
+        table {
+            border-collapse: collapse;
+            margin: auto auto;
+        }
+
+        #txt {
+            width: 604px;
+            height: 70px;
+            font-size: 30px;
+            text-align: right;
+        }
+
+        .btn_click {
+            width: 100%;
+            height: 100%;
+            font-size: 30px;
+        }
+
+        td {
+            width: 150px;
+            height: 70px;
+        }
+
+        .btn {
+            width: 100%;
+            height: 100%;
+            font-size: 30px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <table border="1">
+        <tr>
+            <td colspan="4"><input id="txt" type="text"></td>
+        </tr>
+        <tr>
+            <td colspan="2"><input class="btn_click" type="button" value="AC" onclick="zero()"></td>
+            <td colspan="2"><input class="btn_click" type="button" value="DEL" onclick="del()"></td>
+        </tr>
+        <tr>
+            <td><button class="btn" onclick="number(this)">7</button></td>
+            <td><button class="btn" onclick="number(this)">8</button></td>
+            <td><button class="btn" onclick="number(this)">9</button></td>
+            <td><button class="btn" onclick="number(this)">/</button></td>
+        </tr>
+        <tr>
+            <td><button class="btn" onclick="number(this)">4</button></td>
+            <td><button class="btn" onclick="number(this)">5</button></td>
+            <td><button class="btn" onclick="number(this)">6</button></td>
+            <td><button class="btn" onclick="number(this)">*</button></td>
+        </tr>
+        <tr>
+            <td><button class="btn" onclick="number(this)">1</button></td>
+            <td><button class="btn" onclick="number(this)">2</button></td>
+            <td><button class="btn" onclick="number(this)">3</button></td>
+            <td><button class="btn" onclick="number(this)">-</button></td>
+        </tr>
+        <tr>
+            <td><button class="btn" onclick="number(this)">0</button></td>
+            <td><button class="btn" onclick="number(this)">.</button></td>
+            <td><button class="btn" onclick="number(this)">=</button></td>
+            <td><button class="btn" onclick="add()">+</button></td>
+        </tr>
+    </table>
+
+        <script>
+
+            //宣告變數抓取屏幕
+            var txt = document.getElementById("txt");
+            //輸入數字
+            function number(values){
+                txt.value += values.innerHTML;
+            }
+            //歸零
+            function zero(){
+                txt.value = "";
+            }
+            //退格建
+            function del(){
+                txt.value = txt.value.substr(0,txt.value.length-1);
+            }
+            //如果開頭不是數字便無法輸入小數點
+            if(){
+
+            }
+            
+            
+
+
+            //計算
+
+        </script>
+
+</body>
+
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/css">
+        .label {
+            border: 2px solid black;
+            width: 500px;
+            height: 300px;
+            margin: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
+        }
+
+        .produce {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin: 10px 0px;
+        }
+
+        .produce input {
+            width: 300px;
+        }
+
+        .number1,
+        .number2,
+        .number3,
+        .number4 {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 5px;
+        }
+
+        button {
+            margin: 0px 5px;
+            font-size: 30px;
+            background-color: black;
+            color: white;
+        }
+
+        input {
+            font-size: 30px;
+        }
+    </style>
+
+
+</head>
+
+<body>
+
+    <div class="label">
+        <label id="label">
+            0 ~ 100
+        </label>
+    </div>
+
+    <div class="produce">
+        <button id="aaa" onclick="_getRandom()">產生數字</button>
+        <input id="input" type="number">
+    </div>
+    <div class="number1">
+        <button onclick="number(this)">1</button>
+        <button onclick="number(this)">2</button>
+        <button onclick="number(this)">3</button>
+    </div>
+    <div class="number2">
+        <button onclick="number(this)">4</button>
+        <button onclick="number(this)">5</button>
+        <button onclick="number(this)">6</button>
+    </div>
+    <div class="number3">
+        <button onclick="number(this)">7</button>
+        <button onclick="number(this)">8</button>
+        <button onclick="number(this)">9</button>
+    </div>
+    <div class="number4">
+        <button onclick="del()">X</button>
+        <button onclick="number(this)">0</button>
+        <button onclick="sure()">V</button>
+    </div>
+
+
+    <script>
+
+        //產生亂數的方法
+        var getRandom;
+        function _getRandom() {
+            getRandom = Math.floor(Math.random() * 100);
+            alert(getRandom);
+        }
+
+        //輸入數字
+        var input = document.getElementById('input');
+        function number(values) {
+            input.value += values.innerText;
+        }
+
+        function del() {
+            input.value = "";
+        }
+        var label = document.getElementById("label");
+        var min = 0;
+        var max = 100;
+        
+        function sure(){
+                let inputnumber = parseInt(input.value);
+                if(inputnumber > 100){
+                    alert("錯");
+                }
+                else if(getRandom == inputnumber){
+                    alert("oh ya");
+                    label.innerText = min + "~" + max;
+                    min = 0; 
+                    max = 100;
+                    _getRandom();
+                }
+                else if(getRandom > inputnumber && inputnumber > min){
+                    min = inputnumber;
+                }
+                else if(getRandom < inputnumber && inputnumber < max){
+                    max = inputnumber;
+                }
+                
+                label.innerText = min + "~" + max;
+                input.value = "";
+                
+            // else{
+            //     alert("妳忘記按答案了");
+            // }
+        }
+        window.onload =  _getRandom();
+    </script>
+
+
+</body>
+
+</html>
