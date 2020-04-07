@@ -11,7 +11,7 @@
             margin: auto auto;
         }
 
-        #txt {
+        #txt,#history {
             width: 604px;
             height: 70px;
             font-size: 30px;
@@ -39,65 +39,113 @@
 
 <body>
 
-    <table border="1">
+    <table>
         <tr>
-            <td colspan="4"><input id="txt" type="text"></td>
+            <td colspan="4"><input id="txt" type="text" value="0"></td>
         </tr>
         <tr>
-            <td colspan="2"><input class="btn_click" type="button" value="AC" onclick="zero()"></td>
-            <td colspan="2"><input class="btn_click" type="button" value="DEL" onclick="del()"></td>
+            <td colspan="2"><button class="btn_click" value="AC" onclick="zero()">AC</button></td>
+            <td colspan="2"><button class="btn_click" value="DEL" onclick="del()">DEL</button></td>
         </tr>
         <tr>
-            <td><button class="btn" onclick="number(this)">7</button></td>
-            <td><button class="btn" onclick="number(this)">8</button></td>
-            <td><button class="btn" onclick="number(this)">9</button></td>
-            <td><button class="btn" onclick="number(this)">/</button></td>
+            <td><button class="btn" onclick="number('7')" value="7">7</button></td>
+            <td><button class="btn" onclick="number('8')" value="8">8</button></td>
+            <td><button class="btn" onclick="number('9')" value="9">9</button></td>
+            <td><button class="btn" onclick="operBtn('/')" value="/">/</button></td>
         </tr>
         <tr>
-            <td><button class="btn" onclick="number(this)">4</button></td>
-            <td><button class="btn" onclick="number(this)">5</button></td>
-            <td><button class="btn" onclick="number(this)">6</button></td>
-            <td><button class="btn" onclick="number(this)">*</button></td>
+            <td><button class="btn" onclick="number('4')" value="4">4</button></td>
+            <td><button class="btn" onclick="number('5')" value="5">5</button></td>
+            <td><button class="btn" onclick="number('6')" value="6">6</button></td>
+            <td><button class="btn" onclick="operBtn('*')" value="*">*</button></td>
         </tr>
         <tr>
-            <td><button class="btn" onclick="number(this)">1</button></td>
-            <td><button class="btn" onclick="number(this)">2</button></td>
-            <td><button class="btn" onclick="number(this)">3</button></td>
-            <td><button class="btn" onclick="number(this)">-</button></td>
+            <td><button class="btn" onclick="number('1')" value="1">1</button></td>
+            <td><button class="btn" onclick="number('2')" value="2">2</button></td>
+            <td><button class="btn" onclick="number('3')" value="3">3</button></td>
+            <td><button class="btn" onclick="operBtn('-')" value="-">-</button></td>
         </tr>
         <tr>
-            <td><button class="btn" onclick="number(this)">0</button></td>
-            <td><button class="btn" onclick="number(this)">.</button></td>
-            <td><button class="btn" onclick="number(this)">=</button></td>
-            <td><button class="btn" onclick="add()">+</button></td>
+            <td><button class="btn" onclick="number('0')" value="0">0</button></td>
+            <td><button class="btn" onclick="number('.')" value=".">.</button></td>
+            <td><button class="btn" onclick="equal()" value="=">=</button></td>
+            <td><button class="btn" onclick="operBtn('+')" value="+">+</button></td>
         </tr>
     </table>
 
         <script>
 
-            //宣告變數抓取屏幕
-            var txt = document.getElementById("txt");
-            //輸入數字
-            function number(values){
-                txt.value += values.innerHTML;
-            }
             //歸零
             function zero(){
-                txt.value = "";
+                txt.value = "0";
+                tmp='';
             }
             //退格建
             function del(){
+                if(txt.value.length != 0)
                 txt.value = txt.value.substr(0,txt.value.length-1);
             }
-            //如果開頭不是數字便無法輸入小數點
-            if(){
 
+
+            var txt = document.getElementById("txt");
+            var strOper = 0;
+
+            var tmp=''; //暫存的
+            function number(str){
+                // if(strOper == null){
+                //     txt.value = str;
+                //     // strOper = 0
+                //     return;
+                // };
+
+                if( str == "." && !txt.value.includes(".")){
+                    console.log(txt.value);
+                    txt.value += ".";
+                }
+                else if(str != '.'){
+                    txt.value += str;
+                }
+                else if(txt.value.substring(start,0) == 0){
+                    txt.value += str;
+                }
+                
             }
             
-            
+            function operBtn(str){
+                //執行方法 如果輸入5+ 進到以下方法時 是等於txt.value(5) = valueA(0) + txt.value(5) 
+                equal();
+                history.value = txt.value;
+                //然後再把答案存進valueA
+                valueA=txt.value;
+                //然後再把運算符號存進strOper
+                strOper=str;
+                //按完運算符號會等於0
+                txt.value = "0";
+                tmp='';
 
+            }
+            function equal(){
+                switch(strOper){
+                    case '+':
+                        txt.value=parseFloat(valueA)+parseFloat(txt.value);
+                        break;
+                    case '-':
+                        txt.value=parseFloat(valueA)-parseFloat(txt.value);
+                        break;
+                    case '*':
+                        txt.value=parseFloat(valueA)*parseFloat(txt.value);
+                        break;
+                    case '/':
+                        txt.value=parseFloat(valueA)/parseFloat(txt.value);
+                        break;
+                    default:
+                        break;
+                }
 
-            //計算
+                temp = null;
+                strOper=null;
+
+            }
 
         </script>
 
