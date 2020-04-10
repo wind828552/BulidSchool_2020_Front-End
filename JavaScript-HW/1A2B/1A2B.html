@@ -6,17 +6,53 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <script src="https://kit.fontawesome.com/57b8d30415.js" crossorigin="anonymous"></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-        <style type="text/css">
-            .item{
-                width: 100%;
-                margin: auto;
-            }
-        </style>
+    <style type="text/css">
+        .container {
+            /* background-color: red; */
+        }
+
+        .item {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        button {
+            flex-grow: 1;
+            background-color: wheat;
+        }
+
+        .course {
+            margin-top: 10px;
+            background-color: wheat;
+        }
+
+        label {
+            background-color: wheat;
+            width: 100%;
+            /* height: 300px; */
+        }
+
+        .guess p {
+            font-size: 15px;
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+
+        .guess input {
+            width: 100%;
+            margin-bottom: 5px;
+        }
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+    </style>
 
 </head>
 
@@ -26,30 +62,122 @@
         <div class="row">
             <div class="col-12 col-xl-12">
                 <div class="item">
-                    <button>開始遊戲</button>
-                    <button>從頭來過</button>
-                    <button>看答案</button>
+                    <button id="start">開始遊戲</button>
+                    <button class="btns" id="restart" onclick="Restart()">從頭來過</button>
+                    <button class="btns" id="answer" onclick="Answer()">看答案</button>
                 </div>
-                <div>
-                    <label>檢視歷程</label>
+                <div class="guess">
+                    <p>猜吧猜吧~~~~~~~~~ <i class="fas fa-hand-point-down"></i></p>
+                    <input oninput = "value=value.replace(/[^\d]/g,'')" maxlength="4" minlength='4' id="input" type="text">
+                    <button class="btns" onclick="Judgment()">送出</button>
                 </div>
-                <div>
-                    <nav class="navbar navbar-light bg-light">
-                        <form class="form-inline">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="basic-addon1">@</span>
-                                </div>
-                                <input type="text" class="form-control" placeholder="Username" aria-label="Username"
-                                    aria-describedby="basic-addon1">
-                            </div>
-                        </form>
-                    </nav>
+                <div class="course">
+                    <span>檢視歷程</span>
+                    <div id="display">
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
+
+    <script>
+        var input =document.getElementById('input');
+        var restart = document.getElementById("restart");
+        var answer = document.getElementById("answer");
+        var display = document.getElementById("display");
+        var buttons = document.getElementsByClassName("btns");
+        var start = document.getElementById('start');
+        start.addEventListener('click', _randomnumber);
+
+        var arr2 = new Array();
+        var _random = new Array();
+        var _number = "";
+        var inputvalue = '';
+
+        //產生亂數
+        function _randomnumber() {
+            for (var btn of buttons) {
+            btn.removeAttribute('disabled', 'disabled');
+        }
+            for (var i = 0; i < 4; i++) {
+                _random[i] = Math.floor(Math.random() * 10);
+                for (var j = 0; j < i; j++) {
+                    while (_random[j] == _random[i]) {
+                        j = 0;
+                        _random[i] = Math.floor(Math.random() * 10);
+                    }
+                }
+                _number = _number + _random[j];
+            }
+        }
+        //看答案
+        function Answer() {
+            alert("答案是 : " + _number);
+            // _number = "";
+        }
+        //重新開始
+        function Restart() {
+            alert("重新開始吧~~~~~~" + "答案是 : " + _number);
+            _number = "";
+            for (var btn of buttons) {
+            btn.setAttribute('disabled', 'disabled');
+            ul.innerHTML='';
+            input.value='';
+        }
+        }
+        //鎖住按鈕
+        for (var btn of buttons) {
+            btn.setAttribute('disabled', 'disabled');
+        }
+        //判斷
+        function Judgment(){
+            inputvalue=document.getElementById('input').value;
+            for(var i = 0 ; i < 4 ; i++){
+                
+                arr2[i] = parseInt(inputvalue[i]);
+            }
+            JudgmentAB();
+            displaynum();
+        }
+        var countofA=0,countofB=0;
+        function JudgmentAB(){
+            countofA=0;
+            countofB=0;
+            let intersect= _random.filter(e=>arr2.includes(e));
+            let total = intersect.length;
+            for(var i = 0 ; i < 4 ; i++ ){
+                if(_random[i] == arr2[i]){
+                    countofA++;
+                }
+            }
+            countofB = total-countofA;
+        }
+        var ul = document.createElement('ul');
+        display.appendChild(ul);
+        function displaynum(){
+            var span1 = document.createElement('span');
+            span1.innerHTML = `${countofA}A${countofB}B`;
+            var span2 = document.createElement('span');
+            span2.innerHTML = ` ${inputvalue}`
+            var li = document.createElement('li');
+            li.appendChild(span1);
+            li.appendChild(span2);
+            ul.appendChild(li);
+            span1.classList.add('backcolor');
+            if(countofA == 4){
+                span1.classList.add('bg-success' , 'text-white');
+                // alert('答對了');
+                var success=setTimeout("alert('答對了')",200);
+                input.value='';
+            }
+            else{
+                span1.classList.add('bg-danger','text-white');
+            }
+
+        }
+
+    </script>
 
 
 

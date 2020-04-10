@@ -78,7 +78,6 @@
             //歸零
             function zero(){
                 txt.value = "0";
-                tmp='';
             }
             //退格建
             function del(){
@@ -89,14 +88,7 @@
 
             var txt = document.getElementById("txt");
             var strOper = 0;
-
-            var tmp=''; //暫存的
             function number(str){
-                // if(strOper == null){
-                //     txt.value = str;
-                //     // strOper = 0
-                //     return;
-                // };
 
                 if( str == "." && !txt.value.includes(".")){
                     console.log(txt.value);
@@ -121,7 +113,6 @@
                 strOper=str;
                 //按完運算符號會等於0
                 txt.value = "0";
-                tmp='';
 
             }
             function equal(){
