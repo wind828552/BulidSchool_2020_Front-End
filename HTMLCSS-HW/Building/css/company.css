@@ -4,16 +4,13 @@ div[class*='col'] {
 }
 
 .company-information-container{
-    background-color: rgba(0, 0, 0, 0.849);
-    padding: 50px 0px;
+    background-color: #000000d8;
     margin-top: 100px;
 }
 .company-information-container .row{
     display: flex;
     flex-wrap: wrap;
-
 }
-
 
 
 .company-information-container .row img{
@@ -117,9 +114,6 @@ div[class*='col'] {
     .col-xl-11{ width: 91.666666%; }
     .col-xl-12{ width: 100%; }
 
-    .company-information-container{
-        padding: 100px 100px;
-    }
     .company-information-container .phine{
         margin: 0px;
     }
@@ -141,6 +135,12 @@ div[class*='col'] {
         display: flex;
         justify-content: center;
     }
+    /* .Community-wrap .row .Manufax {
+        margin-right: 200px;
+    }
+    .Community-wrap .row .Community{
+        margin-left: 200px;
+    } */
     .Community-wrap .row span{
         display: flex;
         flex-wrap: nowrap;
@@ -155,5 +155,8 @@ div[class*='col'] {
     }
     .Community-wrap .row .Community a{
         color: white;
-        letter-spacing: 3px;
+        margin: 0px 8px;
+    }
+    .Community-wrap .row .Community a i:hover{
+        color:  rgb(0, 119, 255);
     }
