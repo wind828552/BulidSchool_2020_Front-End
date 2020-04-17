@@ -10,6 +10,9 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous">
+        </script>
 </head>
 
 <body>
@@ -17,62 +20,94 @@
 
         //創建表格
         var table = document.createElement("table");
-        var body = document.getElementsByTagName("body")[0];
-        var tbody = document.createElement("tbody");
         var thead = document.createElement("thead");
+        var tbody = document.createElement("tbody");
+        var body = document.getElementsByTagName("body")[0];
+
         table.appendChild(thead);
         table.appendChild(tbody);
         body.appendChild(table);
+        // debugger;
         //給表格樣式
         table.classList.add('table');
         thead.classList.add('thead-dark');
+        // debugger;
+
 
         let ipad = '';
-        window.onload = function get() {
-            var xhr = new XMLHttpRequest();
-            xhr.onload = function () {
-                ipad = JSON.parse(this.responseText);
+        // window.onload = function get() {
+        // var xhr = new XMLHttpRequest();
+        //     xhr.onload = function () {
+        //         ipad = JSON.parse(this.responseText);
+        //         addThead(ipad.products[0]);
+        //         addTbody(ipad.products);
+        //     }
+        //     xhr.open('GET', 'https://bs-frontend.azurewebsites.net/api/Apple/IPad');
+        //     xhr.send();
+        // }
+        $.ajax({
+            type: "get",
+            url: "https://bs-frontend.azurewebsites.net/api/Apple/IPad",
+            success: function (response) {
+                ipad = JSON.parse(response);
+                addThead(ipad.products[0]);
+                addTbody(ipad.products);
             }
-            xhr.open('GET', 'https://bs-frontend.azurewebsites.net/api/Apple/IPad');
-            xhr.send();
-        }
+        });
 
         //thead 一筆資料 讓資料寫進去
-        function addThead(ipad) {
+        function addThead(titleArray) {
             var tr = document.createElement("tr");
-            for (var i in ipad) {
+            for (var i in titleArray) {
                 let th = document.createElement("th");
                 th.innerHTML = i;
                 tr.appendChild(th);
-                th.setAttribute('scope', 'col');
+                // th.setAttribute('scope', 'col');
+                th.addEventListener('click', sort);
             }
             thead.appendChild(tr);
         }
 
         //多筆資料 讓資料寫進去
-        function addTbody(ipad) {
-            for (var i in ipad) {
+        function addTbody(rowArray) {
+            for (var i in rowArray) {
                 let tr = document.createElement("tr");
-                for (var j in ipad[i]) {
+                for (var j in rowArray[i]) {
                     let td = document.createElement("td");
-                    td.innerHTML = ipad[i][j];
+                    td.innerHTML = rowArray[i][j];
                     tr.appendChild(td);
                 }
                 tbody.appendChild(tr);
             }
         }
 
-        // addThead(ipad[0]);
-        // addTbody(ipad);
 
-        // function sore() {
-        //     thead.innerHTML = '';
-        //     tbody.innerHTML = '';
-        //     table.innerHTML = '';
-        //     theadarr = [];
-        //     body.appendChild(table);
 
-        // }
+        function sort() {
+            tbody.innerHTML = '';
+            let ipadsort = this.innerText;
+            ipad.products.sort(function (a, b) {
+                if (a[ipadsort] < b[ipadsort]) {
+                    return -1;
+                }
+                if (a[ipadsort] > b[ipadsort]) {
+                    return 1;
+                }
+                if(a[ipadsort] == b[ipadsort]){
+                    return 0;
+                }
+            })
+            addTbody(ipad.products);
+            // for(let i in ipad.products){
+            //     let tr = document.createElement("tr");
+            //     for(let j in ipad.products[i]){
+            //         let td = document.createElement("td");
+            //         td.innerHTML = ipad.products[i][j];
+            //         tr.appendChild(td);
+            //     }
+            //     tbody.appendChild(tr);
+            // }
+        }
 
     </script>
 
@@ -80,9 +115,9 @@
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
+        crossorigin="anonymous"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
         crossorigin="anonymous"></script>
