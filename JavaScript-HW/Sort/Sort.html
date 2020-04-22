@@ -13,16 +13,22 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous">
         </script>
+    <script src="https://kit.fontawesome.com/57b8d30415.js" crossorigin="anonymous"></script>
+
 </head>
 
 <body>
+    <button id="topaa" onclick="sort()"><i class="far fa-caret-square-up"></i></button>
+    <button id="bottomaa" onclick="sort()"><i class="far fa-caret-square-down"></i></button>
     <script>
-
+        
         //創建表格
         var table = document.createElement("table");
         var thead = document.createElement("thead");
         var tbody = document.createElement("tbody");
         var body = document.getElementsByTagName("body")[0];
+        var top = document.getElementById("topaa");
+        var bottom = document.getElementById("bottomaa");
 
         table.appendChild(thead);
         table.appendChild(tbody);
@@ -35,16 +41,6 @@
 
 
         let ipad = '';
-        // window.onload = function get() {
-        // var xhr = new XMLHttpRequest();
-        //     xhr.onload = function () {
-        //         ipad = JSON.parse(this.responseText);
-        //         addThead(ipad.products[0]);
-        //         addTbody(ipad.products);
-        //     }
-        //     xhr.open('GET', 'https://bs-frontend.azurewebsites.net/api/Apple/IPad');
-        //     xhr.send();
-        // }
         $.ajax({
             type: "get",
             url: "https://bs-frontend.azurewebsites.net/api/Apple/IPad",
@@ -62,7 +58,6 @@
                 let th = document.createElement("th");
                 th.innerHTML = i;
                 tr.appendChild(th);
-                // th.setAttribute('scope', 'col');
                 th.addEventListener('click', sort);
             }
             thead.appendChild(tr);
@@ -81,32 +76,23 @@
             }
         }
 
-
-
+        //排序
         function sort() {
+            //清空內容
             tbody.innerHTML = '';
             let ipadsort = this.innerText;
             ipad.products.sort(function (a, b) {
                 if (a[ipadsort] < b[ipadsort]) {
-                    return -1;
+                return -1;
                 }
                 if (a[ipadsort] > b[ipadsort]) {
                     return 1;
                 }
                 if(a[ipadsort] == b[ipadsort]){
-                    return 0;
+                return 0;
                 }
             })
             addTbody(ipad.products);
-            // for(let i in ipad.products){
-            //     let tr = document.createElement("tr");
-            //     for(let j in ipad.products[i]){
-            //         let td = document.createElement("td");
-            //         td.innerHTML = ipad.products[i][j];
-            //         tr.appendChild(td);
-            //     }
-            //     tbody.appendChild(tr);
-            // }
         }
 
     </script>
