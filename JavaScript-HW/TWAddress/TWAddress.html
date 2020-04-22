@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <title>Document</title>
+    <style type="text/css">
+        h1{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Taiwan Address</h1>
+    <script>
+        var table = document.createElement("table");
+        var thead = document.createElement("thead");
+        var tbody = document.createElement("tbody");
+        var body = document.getElementsByTagName("body")[0];
+        
+        table.appendChild("thead");
+        table.appendChild("tbody");
+        body.appendChild("table");
+
+        let area = "";
+        $$.ajax({
+            type: "get",
+            url: "TaiwanAddress.json",
+            success: function (response) {
+                area = JOIN.patse(response);
+            }
+        });
+
+    </script>
+
+</body>
+</html>
