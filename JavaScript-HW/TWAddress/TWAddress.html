@@ -13,27 +13,95 @@
     </style>
 </head>
 <body>
-    <h1>Taiwan Address</h1>
-    <script>
-        var table = document.createElement("table");
-        var thead = document.createElement("thead");
-        var tbody = document.createElement("tbody");
-        var body = document.getElementsByTagName("body")[0];
-        
-        table.appendChild("thead");
-        table.appendChild("tbody");
-        body.appendChild("table");
 
-        let area = "";
-        $$.ajax({
-            type: "get",
-            url: "TaiwanAddress.json",
-            success: function (response) {
-                area = JOIN.patse(response);
+
+    <table id="table">
+        <thead>
+            <tr>
+                <th>城市</th>
+                <th>區域</th>
+                <th>郵遞區號</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+
+    <template id="template">
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </template>
+
+
+<script>
+    //步驟1
+    //準備資料
+    //#自定義資料
+    //資料來源 : 網路上來的
+    
+    //步驟2
+    //整理資料
+    
+    //步驟3
+    //把資料呈現在畫面上
+    
+    //步驟4
+    //賦予畫面功能
+    //按鈕click要做的事情
+
+    //步驟5
+    //畫面變漂亮
+
+    var table = document.getElementById("table");
+    let zipcodeArray = '';
+    let _districts = [];
+    let ZipCode = [];
+
+    window.onload = function () {
+        let xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                zipcodeArray = JSON.parse(this.responseText);
+
+                zipcodeArray.forEach((item) => {
+                    let _City = item.CityName;
+                    item.AreaList.forEach((item, index) => {
+                        _districts.push({ Districts: item.AreaName, ZipCode: tiem.ZipCode });
+                    });
+                    let _CityObject = { City: _city, Districts: _districts };
+                    ZipCode.push(_CityObject);
+                })
+                ZipCode.forEach(item){
+                    addTbody(Object.value(item));
+                }
+            } else {
+                msg.textContent = '發⽣錯誤，HTTP response代碼：'
+                    + xhr.status;
             }
-        });
+        }
+        xhr.open("GET",'../TaiwaAddress/TaiwanAddress.json');
+        xhr.send();
+    }
+    function addTbody(rowarray){
+        let template = document.getElementById("template");
+        for(let i = 0; i<rowarray[1].length;i++){
+            let cloneContent = template.content.cloneNode(true);
+            let tds = cloneContent.querySelectorAll("td");
 
-    </script>
+            tds[0].innerHTML = rowarray[0];
+            tds[1].innerHTML = rowarray[1][i].Districts;
+            tds[2].innerHTML = rowarray[1][i].ZipCode;
+
+            let tbody = document.getElementsByTagName("tbody")[0];
+            tbody.appendChild(cloneContent);
+        }
+    }
+</script>
+
 
 </body>
 </html>

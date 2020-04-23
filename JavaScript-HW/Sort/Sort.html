@@ -18,10 +18,9 @@
 </head>
 
 <body>
-    <button id="topaa" onclick="sort()"><i class="far fa-caret-square-up"></i></button>
-    <button id="bottomaa" onclick="sort()"><i class="far fa-caret-square-down"></i></button>
+
     <script>
-        
+
         //創建表格
         var table = document.createElement("table");
         var thead = document.createElement("thead");
@@ -46,7 +45,10 @@
             url: "https://bs-frontend.azurewebsites.net/api/Apple/IPad",
             success: function (response) {
                 ipad = JSON.parse(response);
-                addThead(ipad.products[0]);
+                //Object.keys()方法會回傳一個由指定物件所有可列舉之屬性組成的陣列
+                const titleArray = Object.keys(ipad.products[0]);
+                addThead(titleArray);
+                // console.log(titleArray);
                 addTbody(ipad.products);
             }
         });
@@ -56,11 +58,20 @@
             var tr = document.createElement("tr");
             for (var i in titleArray) {
                 let th = document.createElement("th");
-                th.innerHTML = i;
+                //只寫i會顯示1234
+                th.innerHTML = titleArray[i];
                 tr.appendChild(th);
-                th.addEventListener('click', sort);
+                // th.addEventListener('click', sort);
             }
             thead.appendChild(tr);
+
+            var titleth = document.querySelectorAll("thead tr th:nth-child(-n+3)");
+            // var titleth = document.querySelectorAll("thead tr th:not(:nth-last-child(1)):not(:nth-last-child(2))");
+            for(let i = 0 ; i < titleth.length ; i++){
+                titleth[i].innerHTML += '<i class="fas fa-sort"><i>'
+                    // titleth[i].innerHTML = `${titleth[i].innerHTML} <i class="fas fa-sort"><i>`
+                titleth[i].addEventListener('click',sort);
+            }
         }
 
         //多筆資料 讓資料寫進去
@@ -77,21 +88,36 @@
         }
 
         //排序
+        let fa = true;
         function sort() {
             //清空內容
             tbody.innerHTML = '';
-            let ipadsort = this.innerText;
+            let ipadsort = this.innerText.trim();
             ipad.products.sort(function (a, b) {
-                if (a[ipadsort] < b[ipadsort]) {
-                return -1;
+                if(fa){
+                    if (a[ipadsort] < b[ipadsort]) {
+                        return -1;
+                    }
+                    if (a[ipadsort] > b[ipadsort]) {
+                        return 1;
+                    }
+                    if (a[ipadsort] == b[ipadsort]) {
+                        return 0;
+                    }
                 }
-                if (a[ipadsort] > b[ipadsort]) {
-                    return 1;
-                }
-                if(a[ipadsort] == b[ipadsort]){
-                return 0;
+                else{
+                    if (a[ipadsort] < b[ipadsort]) {
+                        return 1;
+                    }
+                    if (a[ipadsort] > b[ipadsort]) {
+                        return -1;
+                    }
+                    if (a[ipadsort] == b[ipadsort]) {
+                        return 0;
+                    }
                 }
             })
+            fa = (!fa);
             addTbody(ipad.products);
         }
 
