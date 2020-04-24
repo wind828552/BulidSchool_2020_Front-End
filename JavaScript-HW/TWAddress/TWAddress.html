@@ -58,8 +58,7 @@
 
     var table = document.getElementById("table");
     let zipcodeArray = '';
-    let _districts = [];
-    let ZipCode = [];
+    let zipcode = [];
 
     window.onload = function () {
         let xhr = new XMLHttpRequest();
@@ -68,22 +67,22 @@
                 zipcodeArray = JSON.parse(this.responseText);
 
                 zipcodeArray.forEach((item) => {
-                    let _City = item.CityName;
-                    item.AreaList.forEach((item, index) => {
-                        _districts.push({ Districts: item.AreaName, ZipCode: tiem.ZipCode });
+                    let newObj = {City:item.CityName, Districs:[]};
+                    item.AreaList.forEach((el) => {
+                        newObj.AreaList.push({ Districts:el.AreaName, ZipCode: el.ZipCode });
                     });
-                    let _CityObject = { City: _city, Districts: _districts };
-                    ZipCode.push(_CityObject);
+                    zipcode.push(newObj);
                 })
-                ZipCode.forEach(item){
+                zipcode.forEach((item)=>{
                     addTbody(Object.value(item));
-                }
-            } else {
+                })
+            } 
+            else {
                 msg.textContent = '發⽣錯誤，HTTP response代碼：'
                     + xhr.status;
             }
         }
-        xhr.open("GET",'../TaiwaAddress/TaiwanAddress.json');
+        xhr.open("GET",'TaiwanAddress.json');
         xhr.send();
     }
     function addTbody(rowarray){

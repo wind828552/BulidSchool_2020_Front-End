@@ -12,15 +12,17 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <style type="text/css">
-    .Y-M-operation{
+    .Y-M-operation {
         display: flex;
         justify-content: space-between;
         align-items: center;
     }
-    .months{
+
+    .months {
         font-size: 25px;
     }
-    .years{
+
+    .years {
         font-size: 25px;
     }
 
@@ -54,7 +56,7 @@
         <div class="row">
             <div class="col">
                 <div class="Y-M-operation">
-                    <button class="btn" onclick="on()"><</button>
+                    <button class="btn" onclick="on()">nfjnef</button>
                     <div>
                         <span class="years" id="years">2020年</span>
                         <span class="months" id="months">4月</span>
@@ -139,33 +141,68 @@
 
     <script>
 
-        var getdays = new Date()
-        // console.log(days);
-        var getyears = getdays.getFullYear();
-        // console.log(years);
-        var getmonth = getdays.getMonth();
-        // console.log(month);
+        var getyears = new Date().getFullYear();
+        var getmonths = new Date().getMonth();
+        var getweek = new Date(getyears, getmonths, 1).getDay();
+        var getdays = new Date(getyears, getmonths + 1, 0).getDate()
+        var tds = document.querySelectorAll("td");
         var months = document.getElementById("months");
-        var years = document.getElementById("years"); 
-        
-        //下個月
-        function under(){
-            getmonth++;
-            months.innerText = `${(getmonth)}月`;
-            if(getmonth > 12){
-                months.innerText = `${(getmonth=1)}月`;
-            }
-        }
-        //上個月
-        function on(){
-            getmonth--;
-            months.innerText = `${(getmonth)}月`;
-            if(getmonth < 1){
-                months.innerText = `${(getmonth=12)}月`
-                years.innerText = `${(getyears)}年`
-            }
-        }
+        var years = document.getElementById("years");
 
+        //下個年月
+        function under() {
+            if (getmonths > 11) {
+                getmonths++;
+                months.innerText = `${(getmonths = 1)}月`;
+                getyears++;
+                years.innerText = `${getyears}年`;
+            }
+            else {
+                getmonths++;
+                months.innerText = `${(getmonths)}月`;
+                
+            }
+            
+            getweek = new Date(getyears, getmonths, 1).getDay();
+            getdays = new Date(getyears, getmonths + 1, 0).getDate();
+            deldate();
+            date();
+            
+        }
+        //上個年月
+        function on() {
+            if (getmonths < 2) {
+                getmonths--;
+                months.innerText = `${(getmonths = 12)}月`;
+                getyears--;
+                years.innerText = `${getyears}年`;
+            }
+            else {
+                getmonths--;
+                months.innerText = `${(getmonths)}月`;
+            }
+            getweek = new Date(getyears, getmonths, 1).getDay();
+            getdays = new Date(getyears, getmonths + 1, 0).getDate();
+            deldate();
+            date();
+
+        }
+        //日期
+        function date() {
+
+            for (let i = 1; i <= getdays; i++) {
+                tds[getweek].innerText = i;
+                getweek++;
+            }
+        }
+        date();
+
+
+        function deldate() {
+            for (let i = 0; i < tds.length; i++) {
+                tds[i].innerText = "";
+            }
+        }
     </script>
 
 
