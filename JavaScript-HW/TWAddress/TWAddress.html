@@ -1,21 +1,21 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <title>Document</title>
-    <style type="text/css">
-        h1{
-            text-align: center;
-        }
-    </style>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
+
 <body>
 
-
-    <table id="table">
+    <h1 class="text-center">Taiwan Address</h1>
+    <table id="table" class="table table-striped mx-auto w-50 text-center table-hover">
         <thead>
             <tr>
                 <th>城市</th>
@@ -38,23 +38,6 @@
 
 
 <script>
-    //步驟1
-    //準備資料
-    //#自定義資料
-    //資料來源 : 網路上來的
-    
-    //步驟2
-    //整理資料
-    
-    //步驟3
-    //把資料呈現在畫面上
-    
-    //步驟4
-    //賦予畫面功能
-    //按鈕click要做的事情
-
-    //步驟5
-    //畫面變漂亮
 
     var table = document.getElementById("table");
     let zipcodeArray = '';
@@ -64,17 +47,21 @@
         let xhr = new XMLHttpRequest();
         xhr.onload = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
+                //把抓到的資料轉成json文字檔給zipcodeArray
                 zipcodeArray = JSON.parse(this.responseText);
-
+                //zipcodeArray陣列 利用forEach取出來
                 zipcodeArray.forEach((item) => {
-                    let newObj = {City:item.CityName, Districs:[]};
+                    //要抓取的資料在item裡面，item裡我們要的第一個資料CityName是物件包著的其中一個屬性，所以要選取到他直接.就可以了；
+                    //第二個要抓的資料在AreaList裡面，但不是都是我們要的資料，所以先空白
+                    //因為裡面要包屬性跟值，所以要用大括號包起來
+                    let newObj = { City: item.CityName, Districs:[] };
                     item.AreaList.forEach((el) => {
-                        newObj.AreaList.push({ Districts:el.AreaName, ZipCode: el.ZipCode });
+                        newObj.Districs.push({ Districs: el.AreaName, ZipCode: el.ZipCode });
                     });
                     zipcode.push(newObj);
                 })
                 zipcode.forEach((item)=>{
-                    addTbody(Object.value(item));
+                    addTbody(Object.values(item));
                 })
             } 
             else {
@@ -82,25 +69,41 @@
                     + xhr.status;
             }
         }
-        xhr.open("GET",'TaiwanAddress.json');
+        xhr.open("GET",'https://raw.githubusercontent.com/wind828552/BulidSchool_2020_Front-End/master/JavaScript-HW/TWAddress/TaiwanAddress.json');
         xhr.send();
     }
     function addTbody(rowarray){
         let template = document.getElementById("template");
-        for(let i = 0; i<rowarray[1].length;i++){
+        for(let i = 0; i < rowarray[1].length ; i++){
             let cloneContent = template.content.cloneNode(true);
             let tds = cloneContent.querySelectorAll("td");
 
             tds[0].innerHTML = rowarray[0];
-            tds[1].innerHTML = rowarray[1][i].Districts;
+            tds[1].innerHTML = rowarray[1][i].Districs;
             tds[2].innerHTML = rowarray[1][i].ZipCode;
 
             let tbody = document.getElementsByTagName("tbody")[0];
             tbody.appendChild(cloneContent);
         }
     }
+
 </script>
 
 
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 </body>
+
 </html>

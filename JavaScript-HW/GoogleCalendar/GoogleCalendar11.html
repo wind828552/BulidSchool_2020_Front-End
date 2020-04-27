@@ -135,7 +135,37 @@
             </div>
         </div>
     </div>
-
+    <!-- Modal -->
+    <div class="modal fade" id="New-itinerary" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">新增行程</h5>
+                </div>
+                <div class="modal-body">
+                    <div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default">標題</span>
+                        </div>
+                        <input type="text" id="titleinput" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                    </div> 
+                    </div>
+                    <div>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default">內容</span>
+                            <textarea id="contentinput"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" onclick="Store()">儲存</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 
@@ -148,7 +178,7 @@
         var tds = document.querySelectorAll("td");
         var months = document.getElementById("months");
         var years = document.getElementById("years");
-
+        var clickday;
         //下個年月
         function under() {
             if (getmonths > 11) {
@@ -160,14 +190,14 @@
             else {
                 getmonths++;
                 months.innerText = `${(getmonths)}月`;
-                
+
             }
-            
+
             getweek = new Date(getyears, getmonths, 1).getDay();
             getdays = new Date(getyears, getmonths + 1, 0).getDate();
             deldate();
             date();
-            
+
         }
         //上個年月
         function on() {
@@ -185,13 +215,21 @@
             getdays = new Date(getyears, getmonths + 1, 0).getDate();
             deldate();
             date();
-
         }
+
         //日期
         function date() {
 
             for (let i = 1; i <= getdays; i++) {
                 tds[getweek].innerText = i;
+                tds[getweek].setAttribute('item',`${getyears},${getmonths},${i}`)
+
+                tds[getweek].onclick = function () {
+                    //debugger
+                    clickday=this.textContent;
+                    $('#New-itinerary').modal('show');
+                }
+
                 getweek++;
             }
         }
@@ -201,7 +239,19 @@
         function deldate() {
             for (let i = 0; i < tds.length; i++) {
                 tds[i].innerText = "";
+                tds[i].removeAttribute('item');
+                tds[i].onclick = null;
             }
+        }
+
+        function Store(){
+            var titleinput = document.getElementById("titleinput").value;
+            var contentinput = document.getElementById("contentinput").value;
+            var data = [
+                {"title":titleinput,"content":contentinput}
+            ];
+            data_text = JSON.stringify(data);
+            localStorage.setItem(`${getyears},${getmonths},${clickday}`,data_text)
         }
     </script>
 
