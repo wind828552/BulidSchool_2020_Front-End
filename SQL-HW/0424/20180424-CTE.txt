@@ -1,0 +1,33 @@
+-- Common Table Expression (CTE)
+WITH table1(CustomerID, SupplierID, UnitPrice, Quantity, Discount)
+AS
+(
+	SELECT
+		c.CustomerID, s.SupplierID, od.UnitPrice, od.Quantity, od.Discount
+	FROM Customers c
+	INNER JOIN Orders o ON o.CustomerID = c.CustomerID
+	INNER JOIN [Order Details] od ON od.OrderID = o.OrderID
+	INNER JOIN Products p ON od.ProductID = p.ProductID
+	INNER JOIN Suppliers s ON p.SupplierID = s.SupplierID
+)
+SELECT * FROM
+(
+	SELECT
+		CustomerID, 
+		SUM(UnitPrice * Quantity * (1-Discount)) AS Total
+	FROM table1
+	GROUP BY CustomerID
+) t1
+WHERE EXISTS (
+	SELECT *
+	FROM table1
+	WHERE SupplierID = (
+		SELECT TOP 1
+			SupplierID
+		FROM table1
+		GROUP BY SupplierID
+		ORDER BY SUM(UnitPrice * Quantity * (1-Discount)) DESC	
+	) AND CustomerID = t1.CustomerID
+)
+ORDER BY Total DESC
+

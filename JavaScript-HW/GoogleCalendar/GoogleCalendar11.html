@@ -6,7 +6,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <script src="https://kit.fontawesome.com/57b8d30415.js" crossorigin="anonymous"></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -56,12 +56,12 @@
         <div class="row">
             <div class="col">
                 <div class="Y-M-operation">
-                    <button class="btn" onclick="on()">nfjnef</button>
+                    <button class="btn" onclick="on()"><i class="fas fa-chevron-left"></i></button>
                     <div>
                         <span class="years" id="years">2020年</span>
                         <span class="months" id="months">4月</span>
                     </div>
-                    <button class="btn" onclick="under()">></button>
+                    <button class="btn" onclick="under()"><i class="fas fa-chevron-right"></i></button>
                 </div>
                 <table border="2">
                     <thead>
@@ -170,27 +170,31 @@
 
 
     <script>
-
+        //抓現在的年跟月
         var getyears = new Date().getFullYear();
         var getmonths = new Date().getMonth();
+        //抓今年 年月的1號是星期幾
         var getweek = new Date(getyears, getmonths, 1).getDay();
+        //抓這個月有幾天
         var getdays = new Date(getyears, getmonths + 1, 0).getDate()
         var tds = document.querySelectorAll("td");
         var months = document.getElementById("months");
         var years = document.getElementById("years");
+        const monthName = ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"];
+        months.innerText = monthName[getmonths]
         var clickday;
+
         //下個年月
         function under() {
-            if (getmonths > 11) {
-                getmonths++;
-                months.innerText = `${(getmonths = 1)}月`;
+            if (getmonths == 11) {
+                getmonths=0;
+                months.innerText = monthName[getmonths]
                 getyears++;
                 years.innerText = `${getyears}年`;
             }
             else {
                 getmonths++;
-                months.innerText = `${(getmonths)}月`;
-
+                months.innerText = monthName[getmonths];
             }
 
             getweek = new Date(getyears, getmonths, 1).getDay();
@@ -201,15 +205,15 @@
         }
         //上個年月
         function on() {
-            if (getmonths < 2) {
-                getmonths--;
-                months.innerText = `${(getmonths = 12)}月`;
+            if (getmonths == 0) {
+                getmonths = 11;
+                months.innerText = monthName[getmonths];
                 getyears--;
                 years.innerText = `${getyears}年`;
             }
             else {
                 getmonths--;
-                months.innerText = `${(getmonths)}月`;
+                months.innerText = monthName[getmonths];
             }
             getweek = new Date(getyears, getmonths, 1).getDay();
             getdays = new Date(getyears, getmonths + 1, 0).getDate();
@@ -219,7 +223,6 @@
 
         //日期
         function date() {
-
             for (let i = 1; i <= getdays; i++) {
                 tds[getweek].innerText = i;
                 tds[getweek].setAttribute('item',`${getyears},${getmonths},${i}`)
@@ -252,6 +255,7 @@
             ];
             data_text = JSON.stringify(data);
             localStorage.setItem(`${getyears},${getmonths},${clickday}`,data_text)
+            let key = localStorage.getItem(`${getyears},${getmonths},${clickday}`)
         }
     </script>
 

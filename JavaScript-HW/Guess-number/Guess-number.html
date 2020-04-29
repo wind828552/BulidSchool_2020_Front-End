@@ -28,10 +28,7 @@
             width: 300px;
         }
 
-        .number1,
-        .number2,
-        .number3,
-        .number4 {
+        .number1,.number2,.number3,.number4 {
             width: 100%;
             display: flex;
             justify-content: center;
@@ -42,8 +39,8 @@
         button {
             margin: 0px 5px;
             font-size: 30px;
-            background-color: black;
-            color: white;
+            background-color: white;
+            color: black;
         }
 
         input {
@@ -63,81 +60,80 @@
     </div>
 
     <div class="produce">
-        <button id="aaa" onclick="_getRandom()">產生數字</button>
-        <input id="input" type="number">
+        <button id="start" onclick="_getRandom()">產生數字</button>
+        <input  id="input" type="text" oninput = "value=value.replace(/[^\d]/g,'')">
     </div>
     <div class="number1">
-        <button onclick="number(this)">1</button>
-        <button onclick="number(this)">2</button>
-        <button onclick="number(this)">3</button>
+        <button class="btn" onclick="number(this)">1</button>
+        <button class="btn" onclick="number(this)">2</button>
+        <button class="btn" onclick="number(this)">3</button>
     </div>
     <div class="number2">
-        <button onclick="number(this)">4</button>
-        <button onclick="number(this)">5</button>
-        <button onclick="number(this)">6</button>
+        <button class="btn" onclick="number(this)">4</button>
+        <button class="btn" onclick="number(this)">5</button>
+        <button class="btn" onclick="number(this)">6</button>
     </div>
     <div class="number3">
-        <button onclick="number(this)">7</button>
-        <button onclick="number(this)">8</button>
-        <button onclick="number(this)">9</button>
+        <button class="btn" onclick="number(this)">7</button>
+        <button class="btn" onclick="number(this)">8</button>
+        <button class="btn" onclick="number(this)">9</button>
     </div>
     <div class="number4">
-        <button onclick="del()">X</button>
-        <button onclick="number(this)">0</button>
-        <button onclick="sure()">V</button>
+        <button class="btn" onclick="del()">X</button>
+        <button class="btn" onclick="number(this)">0</button>
+        <button class="btn" onclick="sure()">V</button>
     </div>
 
 
-    <script>
+<script>
+    var start = document.getElementById("start");
+    start.setAttribute('disabled', 'disabled');
+    window.onload =  _getRandom();
+    window.alert("已經有數字了 可以猜囉");
 
-        //產生亂數的方法
-        var getRandom;
-        function _getRandom() {
-            getRandom = Math.floor(Math.random() * 100);
-        }
+    //產生亂數的方法
+    var getRandom;
+    function _getRandom() {
+        getRandom = Math.floor(Math.random() * 100);
+        alert("產生數字了");
+    }
 
-        //輸入數字
-        var input = document.getElementById('input');
-        function number(values) {
-            input.value += values.innerText;
+    //輸入數字
+    var input = document.getElementById('input');
+    function number(values) {
+        input.value += values.innerText;
+    }
+    function del() {
+        input.value = "";
+    }
+    var label = document.getElementById("label");
+    var min = 0;
+    var max = 100;
+    //判斷
+    function sure(){
+        let inputnumber = parseInt(input.value);
+        if(inputnumber > min && inputnumber < max){
+            if(getRandom == inputnumber){
+            alert("恭喜過關");
+            label.innerText = min + "~" + max;
+            min = 0; 
+            max = 100;
+            start.removeAttribute('disabled', 'disabled');
         }
-
-        function del() {
-            input.value = "";
+            else if(getRandom > inputnumber && inputnumber > min){
+            min = inputnumber;
+            }
+            else if(getRandom < inputnumber && inputnumber < max){
+            max = inputnumber;
+            }
         }
-        var label = document.getElementById("label");
-        var min = 0;
-        var max = 100;
-        
-        function sure(){
-                let inputnumber = parseInt(input.value);
-                if(inputnumber > 100){
-                    alert("錯");
-                }
-                else if(getRandom == inputnumber){
-                    alert("oh ya");
-                    label.innerText = min + "~" + max;
-                    min = 0; 
-                    max = 100;
-                    _getRandom();
-                }
-                else if(getRandom > inputnumber && inputnumber > min){
-                    min = inputnumber;
-                }
-                else if(getRandom < inputnumber && inputnumber < max){
-                    max = inputnumber;
-                }
-                
-                label.innerText = min + "~" + max;
-                input.value = "";
-                
-            // else{
-            //     alert("妳忘記按答案了");
-            // }
+        else{
+            alert("請輸入範圍內的數字")
         }
-        window.onload =  _getRandom();
-        window.alert("已經有數字了 可以猜囉");
-    </script>
+        label.innerText = min + "~" + max;
+        input.value = "";
+    }
+</script>
 
 </body>
 

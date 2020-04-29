@@ -12,8 +12,15 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
         .container {
-            /* background-color: red; */
+            margin-top: 20px;
+            font-weight: 1000;
         }
 
         .item {
@@ -22,19 +29,35 @@
         }
 
         button {
+            width: 100px;
+            height: 40px;
             flex-grow: 1;
-            background-color: wheat;
+            border: 1px solid black;
+            border-radius: 10px;
+            background-color: white;
+            font-weight: 1000;
         }
 
         .course {
             margin-top: 10px;
-            background-color: wheat;
+            border: 1px solid black;
+            border-radius: 10px;
+            padding: 0px 10px;
+            line-height: 30px;
+            letter-spacing: 5px;
+        }
+
+        .guess .text {
+            font-size: 20px;
         }
 
         label {
             background-color: wheat;
             width: 100%;
-            /* height: 300px; */
+        }
+
+        #input {
+            font-size: 20px;
         }
 
         .guess p {
@@ -47,12 +70,8 @@
             width: 100%;
             margin-bottom: 5px;
         }
-        *{
-            margin: 0;
-            padding: 0;
-            list-style: none;
-        }
     </style>
+
 
 </head>
 
@@ -67,8 +86,8 @@
                     <button class="btns" id="answer" onclick="Answer()">看答案</button>
                 </div>
                 <div class="guess">
-                    <p>猜吧猜吧~~~~~~~~~ <i class="fas fa-hand-point-down"></i></p>
-                    <input oninput = "value=value.replace(/[^\d]/g,'')" maxlength="4" minlength='4' id="input" type="text">
+                    <p class="text">猜吧猜吧~~~~~~~~~ <i class="fas fa-hand-point-down"></i></p>
+                    <input oninput=" value=value.replace(/[^\d]/g,'')" maxlength="4" id="input" type="text">
                     <button class="btns" onclick="Judgment()">送出</button>
                 </div>
                 <div class="course">
@@ -82,7 +101,7 @@
 
 
     <script>
-        var input =document.getElementById('input');
+        var input = document.getElementById('input');
         var restart = document.getElementById("restart");
         var answer = document.getElementById("answer");
         var display = document.getElementById("display");
@@ -98,8 +117,9 @@
         //產生亂數
         function _randomnumber() {
             for (var btn of buttons) {
-            btn.removeAttribute('disabled', 'disabled');
-        }
+                btn.removeAttribute('disabled', 'disabled');
+                start.setAttribute('disabled', 'disabled');
+            }
             for (var i = 0; i < 4; i++) {
                 _random[i] = Math.floor(Math.random() * 10);
                 for (var j = 0; j < i; j++) {
@@ -111,68 +131,101 @@
                 _number = _number + _random[j];
             }
         }
+
+        //重新開始
+        function Restart() {
+            //揭曉答案並且重新開始
+            alert("重新開始吧~~~~~~" + "答案是 : " + _number);
+            //這個是清除答案
+            _number = "";
+            //這個是清除歷史紀錄
+            ul.innerHTML = '';
+            //這個是清除輸入
+            input.value = '';
+            //把每個按鈕抓到並鎖住
+            for (var btn of buttons) {
+                btn.setAttribute('disabled', 'disabled');
+                start.removeAttribute('disabled', 'disabled');
+            }
+        }
+
         //看答案
         function Answer() {
             alert("答案是 : " + _number);
-            // _number = "";
         }
-        //重新開始
-        function Restart() {
-            alert("重新開始吧~~~~~~" + "答案是 : " + _number);
-            _number = "";
-            for (var btn of buttons) {
-            btn.setAttribute('disabled', 'disabled');
-            ul.innerHTML='';
-            input.value='';
-        }
-        }
-        //鎖住按鈕
+
+        //進入畫面喔鎖住按鈕
         for (var btn of buttons) {
             btn.setAttribute('disabled', 'disabled');
         }
+
         //判斷
-        function Judgment(){
-            inputvalue=document.getElementById('input').value;
-            for(var i = 0 ; i < 4 ; i++){
-                
-                arr2[i] = parseInt(inputvalue[i]);
+        function Judgment() {
+            //抓到值後 再用for迴圈一個一個由字串轉成數值指派給input
+            arr2 = document.getElementById('input').value;
+            if (arr2 != '' && arr2.length == 4) {
+                for (var i = 0; i < 4; i++) {
+                    input[i] = parseInt(arr2[i]);
+                }
+                //比對答案
+                JudgmentAB();
+                //顯示
+                displaynum();
             }
-            JudgmentAB();
-            displaynum();
+            else {
+                alert('不要重複或少於4個數字');
+            }
         }
-        var countofA=0,countofB=0;
-        function JudgmentAB(){
-            countofA=0;
-            countofB=0;
-            let intersect= _random.filter(e=>arr2.includes(e));
+
+        //一開始就初始化為0
+        var countofA = 0, countofB = 0;
+        function JudgmentAB() {
+            //每輸入完一次就初始化為0
+            countofA = 0;
+            countofB = 0;
+            //亂數中包含特定元素指派給intersect
+            let intersect = _random.filter(e => arr2.includes(e));
+            //總長度給total
             let total = intersect.length;
-            for(var i = 0 ; i < 4 ; i++ ){
-                if(_random[i] == arr2[i]){
+            //一個一個做比較 比較是否與A相同
+            for (var i = 0; i < 4; i++) {
+                if (_random[i] == input[i]) {
                     countofA++;
                 }
             }
-            countofB = total-countofA;
+            //B = 總數量-對的位置與數字A
+            countofB = total - countofA;
         }
+        //顯示
         var ul = document.createElement('ul');
         display.appendChild(ul);
-        function displaynum(){
+        function displaynum() {
+            input.value = '';
+            //span1 把猜完後的幾A幾B出來 span2 把打的數字顯示出來
             var span1 = document.createElement('span');
             span1.innerHTML = `${countofA}A${countofB}B`;
             var span2 = document.createElement('span');
-            span2.innerHTML = ` ${inputvalue}`
+            span2.innerHTML = ` ${arr2}`;
             var li = document.createElement('li');
+            // debugger
             li.appendChild(span1);
             li.appendChild(span2);
             ul.appendChild(li);
             span1.classList.add('backcolor');
-            if(countofA == 4){
-                span1.classList.add('bg-success' , 'text-white');
-                // alert('答對了');
-                var success=setTimeout("alert('答對了')",200);
-                input.value='';
+
+            if (countofA == 4) {
+                span1.classList.add('bg-success', 'text-white');
+                var success = setTimeout("alert('答對了')", 200);
+                start.removeAttribute('disabled', 'disabled');
+                input.value = '';
+                ul.innerHTML = '';
+                _number = "";
+                for (var btn of buttons) {
+                    btn.setAttribute('disabled', 'disabled');
+                }
             }
-            else{
-                span1.classList.add('bg-danger','text-white');
+            else {
+                span1.classList.add('bg-danger', 'text-white');
             }
 
         }

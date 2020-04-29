@@ -59,6 +59,7 @@
         function AddPokemon() {
             //1.Create <img> element
             let img = document.createElement('img');
+            //padStart(3, '0')檔名如果小於3位數 就會在左邊添加0
             //2.set img's src=''
             let no = index.toString().padStart(3, '0');
             img.setAttribute('src', `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${no}.png`);
@@ -74,9 +75,11 @@
 
         //按下Button按鈕後-1張圖片
         function removePokemon() {
+            //動態集合 節點長度
             var len = container.childNodes.length;
             if (len > 0) {
                 container.removeChild(container.childNodes[len - 1]);
+                //三元運算式 >1 index-- 不然就做index
                 index > 1 ? index-- : index;
             }
         }
