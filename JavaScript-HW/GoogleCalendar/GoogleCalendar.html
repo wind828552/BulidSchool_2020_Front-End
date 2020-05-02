@@ -282,38 +282,14 @@
             }
         }
 
-        function Store() {
-            let titleinput = document.getElementById("titleinput").value; //抓標題
-            let contentinput = document.getElementById("contentinput").value; //抓內容
-            let key = `${getyears},${getmonths},${clickday}`; //key的格式
-            let data = [{ title : contentinput }]; //把標題跟內容寫成 陣列的物件
-            let datalist = [];
-
-            if(localStorage.getItem(titleinput) == null){
-                let data_text = JSON.stringify(data); //localStorage.setItem只能存字串 所以轉成字串
-                localStorage.setItem(key, data_text); // setItem存進去
-                console.log();
-                date();
-            }
-            else{
-                let arraylist = josn.parse(localStorage.getItem(titleinput));
-                arraylist.push(data);
-                datalist = arraylist;
-            }
-            date();
-        }
-
-
-
-
         // function Store() {
         //     let titleinput = document.getElementById("titleinput").value; //抓標題
         //     let contentinput = document.getElementById("contentinput").value; //抓內容
         //     let key = `${getyears},${getmonths},${clickday}`; //key的格式
-        //     let data = [{ "title": titleinput, "content": contentinput }]; //把標題跟內容寫成 陣列的物件
+        //     let data = [{ title : contentinput }]; //把標題跟內容寫成 陣列的物件
         //     let datalist = [];
 
-        //     if(localStorage.getItem(key) == null){
+        //     if(localStorage.getItem(titleinput) == null){
         //         let data_text = JSON.stringify(data); //localStorage.setItem只能存字串 所以轉成字串
         //         localStorage.setItem(key, data_text); // setItem存進去
         //         console.log();
@@ -324,9 +300,33 @@
         //         arraylist.push(data);
         //         datalist = arraylist;
         //     }
-
-        //     date()
+        //     date();
         // }
+
+
+
+
+        function Store() {
+            let titleinput = document.getElementById("titleinput").value; //抓標題
+            let contentinput = document.getElementById("contentinput").value; //抓內容
+            let key = `${getyears},${getmonths},${clickday}`; //key的格式
+            let data = [{ "title": titleinput, "content": contentinput }]; //把標題跟內容寫成 陣列的物件
+            let datalist = [];
+
+            if(localStorage.getItem(key) == null){
+                let data_text = JSON.stringify(data); //localStorage.setItem只能存字串 所以轉成字串
+                localStorage.setItem(key, data_text); // setItem存進去
+                console.log();
+                date();
+            }
+            else{
+                let arraylist = josn.parse(localStorage.getItem(titleinput));
+                arraylist.push(data);
+                datalist = arraylist;
+            }
+
+            date()
+        }
     </script>
 
 
