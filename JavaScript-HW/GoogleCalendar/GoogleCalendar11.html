@@ -28,13 +28,22 @@
 
     th {
         width: 200px;
-        height: 50px;
+        height: 40px;
         text-align: center;
     }
 
     td {
         width: 200px;
-        height: 100px;
+        height: 80px;
+        padding-bottom: 50px;
+        padding-left: 5px;
+        font-size: 20px;
+    }
+
+    .time {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
     }
 </style>
 
@@ -57,7 +66,7 @@
             <div class="col">
                 <div class="Y-M-operation">
                     <button class="btn" onclick="on()"><i class="fas fa-chevron-left"></i></button>
-                    <div>
+                    <div class="time">
                         <span class="years" id="years">2020年</span>
                         <span class="months" id="months">4月</span>
                     </div>
@@ -66,13 +75,13 @@
                 <table border="2">
                     <thead>
                         <tr>
-                            <th>日</th>
-                            <th>一</th>
-                            <th>二</th>
-                            <th>三</th>
-                            <th>四</th>
-                            <th>五</th>
-                            <th>六</th>
+                            <th style="background-color: rgb(255, 72, 0);">SUN</th>
+                            <th style="background-color: rgb(0, 195, 255);">MON</th>
+                            <th style="background-color: rgb(0, 195, 255);;">TUE</th>
+                            <th style="background-color: rgb(0, 195, 255);;">WED</th>
+                            <th style="background-color: rgb(0, 195, 255);;">THU</th>
+                            <th style="background-color: rgb(0, 195, 255);;">FRI</th>
+                            <th style="background-color: rgb(255, 72, 0);">SAT</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -145,23 +154,34 @@
                 </div>
                 <div class="modal-body">
                     <div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="inputGroup-sizing-default">標題</span>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroup-sizing-default">標題</span>
+                            </div>
+                            <input type="text" id="titleinput" aria-label="Default"
+                                aria-describedby="inputGroup-sizing-default">
                         </div>
-                        <input type="text" id="titleinput" aria-label="Default" aria-describedby="inputGroup-sizing-default">
-                    </div> 
+                    </div>
+                    <div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroup-sizing-default">時間</span>
+                            </div>
+                            <input type="text" aria-label="Default"
+                                aria-describedby="inputGroup-sizing-default">
+                        </div>
                     </div>
                     <div>
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="inputGroup-sizing-default">內容</span>
-                            <textarea id="contentinput"></textarea>
+                            <input type="text" id="contentinput" aria-label="Default"
+                                aria-describedby="inputGroup-sizing-default">
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary" onclick="Store()">儲存</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="Store()">儲存</button>
                 </div>
             </div>
         </div>
@@ -174,7 +194,7 @@
         var getyears = new Date().getFullYear();
         var getmonths = new Date().getMonth();
         //抓今年 年月的1號是星期幾
-        var getweek = new Date(getyears, getmonths, 1).getDay();
+        var getstart = new Date(getyears, getmonths, 1).getDay();//抓到了2020年5月1號(現在時間)並對他做 1號是禮拜幾 指派給getstart getday()方法可返回表示星期的某一天的数字
         //抓這個月有幾天
         var getdays = new Date(getyears, getmonths + 1, 0).getDate()
         var tds = document.querySelectorAll("td");
@@ -184,29 +204,30 @@
         months.innerText = monthName[getmonths]
         var clickday;
 
-        //下個年月
+        //按下button執行換下一個年或月
         function under() {
-            if (getmonths == 11) {
-                getmonths=0;
-                months.innerText = monthName[getmonths]
-                getyears++;
-                years.innerText = `${getyears}年`;
+            if (getmonths == 11) { //如果月份位置等於11(12月)的話
+                getmonths = 0; //月份就會跳回0(1月)的位置
+                months.innerText = monthName[getmonths] //右邊的意思是陣列中第幾個位置 位置從0開始 如果是3就是4月 然後再指派給左邊改變months的innerText
+                getyears++; //等於11(12月) 就跳下一年
+                years.innerText = `${getyears}年`; //格式化年分指派給左邊 改變years的innerText
             }
-            else {
-                getmonths++;
-                months.innerText = monthName[getmonths];
+            else { //如果月不等於11(12月)的話
+                getmonths++; //月份加1
+                months.innerText = monthName[getmonths]; //右邊的意思是陣列中第幾個位置 位置從0開始 如果是3就是4月 然後再指派給左邊改變months的innerText
             }
 
-            getweek = new Date(getyears, getmonths, 1).getDay();
-            getdays = new Date(getyears, getmonths + 1, 0).getDate();
-            deldate();
-            date();
+            getstart = new Date(getyears, getmonths, 1).getDay(); //getstart是抓這個月的第一天 也是抓格子 從第0格開始 假如數到3是這個月的開始 就會從第3格開始塞日期
+            getdays = new Date(getyears, getmonths + 1, 0).getDate(); //最後一天再加1 如果是4月30天 月份+1等於5月0天
+            deldate(); //清空原本日期
+            date(); //日期重新長出(每當要跳一個月時 就清空 再長出)
 
         }
-        //上個年月
+        //按下button執行更換前一個年或月 
+        //同上解釋
         function on() {
-            if (getmonths == 0) {
-                getmonths = 11;
+            if (getmonths == 0) { 
+                getmonths = 11; 
                 months.innerText = monthName[getmonths];
                 getyears--;
                 years.innerText = `${getyears}年`;
@@ -215,48 +236,97 @@
                 getmonths--;
                 months.innerText = monthName[getmonths];
             }
-            getweek = new Date(getyears, getmonths, 1).getDay();
-            getdays = new Date(getyears, getmonths + 1, 0).getDate();
-            deldate();
-            date();
+            getstart = new Date(getyears, getmonths, 1).getDay(); 
+            getdays = new Date(getyears, getmonths + 1, 0).getDate(); 
+            deldate(); 
+            date(); 
         }
-
-        //日期
+        
+        //長出日期
         function date() {
-            for (let i = 1; i <= getdays; i++) {
-                tds[getweek].innerText = i;
-                tds[getweek].setAttribute('item',`${getyears},${getmonths},${i}`)
+            for (let i = 1; i <= getdays; i++) {  //利用for迴圈長日期
+                tds[getstart].innerText = i; //把i從tds[]抓的第一天開始塞進去到
+                // tds[getstart].innerText = '';
+                let key = `${getyears},${getmonths},${i}` //把抓到的年月日指派給key
+                
+                if (localStorage.getItem(key) != null) { //如果key不等於null
+                    let items = localStorage.getItem(key); //把key取出來給items 索引的value
+                    let event = JSON.parse(items); //原本的key是字串 不太好做事 所以利用轉JSON檔的方式轉成陣列物件 讓我們方便使用for迴圈
+                    let ul = document.createElement('ul');
 
-                tds[getweek].onclick = function () {
-                    //debugger
-                    clickday=this.textContent;
-                    $('#New-itinerary').modal('show');
+                    for (let j = 0; j < event.length; j++) { //取出來後 如果j<key長度 這段是讓我們顯示新增的行程
+                        let li = document.createElement('li'); //創建p 放行程
+                        li.innerText = event[j].title; //把key的title標題名稱顯示出來
+                        ul.appendChild(li);
+                        tds[getstart].appendChild(ul); //再把p給tds
+                    }
                 }
-
-                getweek++;
-            }
+                tds[getstart].setAttribute('class', `${getyears},${getmonths},${i}`) //設定屬性
+                tds[getstart].onclick = function () { //當點下日期時執行新增程式的fruntion
+                clickday = this.textContent; 
+                $('#New-itinerary').modal('show'); //Bootstrap 為了讓新增行程的視窗跳出來
+                }
+                getstart++;
+            } 
+            getstart = new Date(getyears, getmonths, 1).getDay(); //
+            
         }
         date();
 
-
-        function deldate() {
-            for (let i = 0; i < tds.length; i++) {
-                tds[i].innerText = "";
-                tds[i].removeAttribute('item');
-                tds[i].onclick = null;
+        //清空
+        function deldate() { 
+            for (let i = 0; i < tds.length; i++) { 
+                tds[i].innerText = "";  //清空日期
+                tds[i].removeAttribute('item'); //清空屬性
+                tds[i].onclick = null; //清空事件
             }
         }
 
-        function Store(){
-            var titleinput = document.getElementById("titleinput").value;
-            var contentinput = document.getElementById("contentinput").value;
-            var data = [
-                {"title":titleinput,"content":contentinput}
-            ];
-            data_text = JSON.stringify(data);
-            localStorage.setItem(`${getyears},${getmonths},${clickday}`,data_text)
-            let key = localStorage.getItem(`${getyears},${getmonths},${clickday}`)
+        function Store() {
+            let titleinput = document.getElementById("titleinput").value; //抓標題
+            let contentinput = document.getElementById("contentinput").value; //抓內容
+            let key = `${getyears},${getmonths},${clickday}`; //key的格式
+            let data = [{ title : contentinput }]; //把標題跟內容寫成 陣列的物件
+            let datalist = [];
+
+            if(localStorage.getItem(titleinput) == null){
+                let data_text = JSON.stringify(data); //localStorage.setItem只能存字串 所以轉成字串
+                localStorage.setItem(key, data_text); // setItem存進去
+                console.log();
+                date();
+            }
+            else{
+                let arraylist = josn.parse(localStorage.getItem(titleinput));
+                arraylist.push(data);
+                datalist = arraylist;
+            }
+            date();
         }
+
+
+
+
+        // function Store() {
+        //     let titleinput = document.getElementById("titleinput").value; //抓標題
+        //     let contentinput = document.getElementById("contentinput").value; //抓內容
+        //     let key = `${getyears},${getmonths},${clickday}`; //key的格式
+        //     let data = [{ "title": titleinput, "content": contentinput }]; //把標題跟內容寫成 陣列的物件
+        //     let datalist = [];
+
+        //     if(localStorage.getItem(key) == null){
+        //         let data_text = JSON.stringify(data); //localStorage.setItem只能存字串 所以轉成字串
+        //         localStorage.setItem(key, data_text); // setItem存進去
+        //         console.log();
+        //         date();
+        //     }
+        //     else{
+        //         let arraylist = josn.parse(localStorage.getItem(titleinput));
+        //         arraylist.push(data);
+        //         datalist = arraylist;
+        //     }
+
+        //     date()
+        // }
     </script>
 
 

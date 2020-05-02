@@ -93,6 +93,7 @@
                 <div class="course">
                     <span>檢視歷程</span>
                     <div id="display">
+
                     </div>
                 </div>
             </div>
@@ -196,25 +197,26 @@
             //B = 總數量-對的位置與數字A
             countofB = total - countofA;
         }
+
         //顯示
         var ul = document.createElement('ul');
-        display.appendChild(ul);
         function displaynum() {
             input.value = '';
+            span1.classList.add('bg-danger', 'text-white');
             //span1 把猜完後的幾A幾B出來 span2 把打的數字顯示出來
             var span1 = document.createElement('span');
             span1.innerHTML = `${countofA}A${countofB}B`;
             var span2 = document.createElement('span');
             span2.innerHTML = ` ${arr2}`;
+
             var li = document.createElement('li');
-            // debugger
             li.appendChild(span1);
             li.appendChild(span2);
             ul.appendChild(li);
+            display.appendChild(ul);
             span1.classList.add('backcolor');
 
             if (countofA == 4) {
-                span1.classList.add('bg-success', 'text-white');
                 var success = setTimeout("alert('答對了')", 200);
                 start.removeAttribute('disabled', 'disabled');
                 input.value = '';

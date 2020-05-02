@@ -41,6 +41,7 @@
             font-size: 30px;
             background-color: white;
             color: black;
+            
         }
 
         input {
@@ -87,28 +88,35 @@
 
 <script>
     var start = document.getElementById("start");
-    start.setAttribute('disabled', 'disabled');
-    window.onload =  _getRandom();
-    window.alert("已經有數字了 可以猜囉");
-
-    //產生亂數的方法
+    var input = document.getElementById('input');
+    var label = document.getElementById("label");
+    var buttons = document.getElementsByClassName("btn");
     var getRandom;
+    var min = 0;
+    var max = 100;
+
+    for (var btn of buttons) {
+        btn.setAttribute('disabled', 'disabled');
+    }
+    //產生亂數的方法
     function _getRandom() {
         getRandom = Math.floor(Math.random() * 100);
         alert("產生數字了");
+        start.setAttribute('disabled', 'disabled');
+        for (var btn of buttons) {
+        btn.removeAttribute('disabled', 'disabled');
+    }
     }
 
     //輸入數字
-    var input = document.getElementById('input');
     function number(values) {
         input.value += values.innerText;
     }
+
     function del() {
         input.value = "";
     }
-    var label = document.getElementById("label");
-    var min = 0;
-    var max = 100;
+
     //判斷
     function sure(){
         let inputnumber = parseInt(input.value);
@@ -119,6 +127,9 @@
             min = 0; 
             max = 100;
             start.removeAttribute('disabled', 'disabled');
+            for (var btn of buttons) {
+                btn.setAttribute('disabled', 'disabled');
+            }
         }
             else if(getRandom > inputnumber && inputnumber > min){
             min = inputnumber;

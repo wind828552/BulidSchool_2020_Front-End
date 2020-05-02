@@ -39,6 +39,148 @@
         var Masklist = [];
         var map;
         var item = [];
+        var city = [{
+            name: "基隆市",
+            latlng: {
+                lat: 25.1303462,
+                lng: 121.7439138
+            }
+        },
+        {
+            name: "臺北市",
+            latlng: {
+                lat: 25.0375465,
+                lng: 121.562244
+            }
+        },
+        {
+            name: "新北市",
+            latlng: {
+                lat: 25.0123073,
+                lng: 121.4632665
+            }
+        },
+        {
+            name: "新竹市",
+            latlng: {
+                lat: 24.7929419,
+                lng: 120.9493054
+            }
+        },
+        {
+            name: "新竹縣",
+            latlng: {
+                lat: 24.8268841,
+                lng: 121.010715
+            }
+        },
+        {
+            name: "桃園市",
+            latlng: {
+                lat: 24.9931617,
+                lng: 121.2988176
+            }
+        },
+        {
+            name: "苗栗縣",
+            latlng: {
+                lat: 24.5648599,
+                lng: 120.8185503
+            }
+        },
+        {
+            name: "台中市", 
+            latlng: {
+                lat: 24.1892645,
+                lng: 120.6090681
+            }
+        },
+        {
+            name: "南投縣", 
+            latlng: {
+                lat: 23.9026841,
+                lng: 120.6883151
+            }
+        },
+        {
+            name: "嘉義市", 
+            latlng: {
+                lat: 23.4812545,
+                lng: 120.4514023
+            }
+        },
+        {
+            name: "嘉義縣", 
+            latlng: {
+                lat: 23.4586677,
+                lng: 120.2907749
+            }
+        },
+        {
+            name: "雲林縣", 
+            latlng: {
+                lat: 23.6992351,
+                lng: 120.5241337
+            }
+        },
+        {
+            name: "臺南市",            
+            latlng: {
+                lat: 22.9922336,
+                lng: 120.18299
+            }
+        },
+        {
+            name: "高雄市",            
+            latlng: {
+                lat: 22.62025,
+                lng: 120.3069565
+            }
+        },
+        {
+            name: "澎湖縣",             
+            latlng: {
+                lat: 23.568495,
+                lng: 119.5668485
+            }
+        },
+        {
+            name: "金門縣", 
+            latlng: {
+                lat: 24.4371954,
+                lng: 118.3171488
+            }
+        },
+        {
+            name: "屏東縣", 
+            latlng: {
+                lat: 22.6830408,
+                lng: 120.4857744
+            }
+        },
+        {
+            name: "臺東縣", 
+            latlng: {
+                lat: 22.7539301,
+                lng: 121.1429397
+            }
+        },
+        {
+            name: "花蓮縣", 
+            latlng: {
+                lat: 23.9848788,
+                lng: 121.5721311
+            }
+        },
+        {
+            name: "宜蘭縣",
+            latlng: {
+                lat: 24.7305437,
+                lng: 121.7619899
+            }
+        },
+        ];
+
         function initMap() {
             var center = { lat: 24.7571483, lng: 120.9520373 },
                 map = new google.maps.Map(document.getElementById('map'), {
@@ -64,18 +206,14 @@
                     setMarkers(map)
                 }
             });
-            
+
         }
         //把name跟經緯度的座標給用這個funtion坐起來
         function change(data) {
             data.forEach((el) => {
-                item.push([el.information[0].name, el.Disrticts[1], el.Disrticts[0],el.information[0].masksLeft,el.information[0].childMasksLeft]);
+                item.push([el.information[0].name, el.Disrticts[1], el.Disrticts[0], el.information[0].masksLeft, el.information[0].childMasksLeft]);
             });
         }
-
-
-
-
 
         function setMarkers(map) {
             var Smiley = {
@@ -84,7 +222,7 @@
                 origin: new google.maps.Point(0, 0),
                 anchor: new google.maps.Point(0, 32)
             };
-            var Crying  = {
+            var Crying = {
                 url: 'emoji.png',
                 size: new google.maps.Size(32, 32),
                 origin: new google.maps.Point(0, 0),
@@ -98,13 +236,11 @@
                 var marker = new google.maps.Marker({
                     position: { lat: beach[1], lng: beach[2] },
                     map: map,
-                    icon: beach[3] + beach[4] == 0? Smiley : Crying ,
+                    icon: beach[3] + beach[4] == 0 ? Smiley : Crying,
                     title: `${beach[0]},成人:${beach[3]},幼兒:${beach[4]}`
                 });
             }
         }
-
-
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlKWP4uWjQIR3WDAWLAu6rUhBfc3_ppag&callback=initMap"
         async defer></script>
