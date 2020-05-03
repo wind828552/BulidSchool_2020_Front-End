@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row">
+
+        </div>
+    </div>
+
+    <template id="template">
+        <div class="card col-6 col-md-4 col-xl-3" style="width: 18rem;">
+            <img class="card-img-top" alt="...">
+            <div class="card-body">
+                <h3 class="card-title"></h3>
+                <p class="price"></p>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+                    按我
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+                            </div>
+                            <div class="modal-body">
+                                <p class="modalp"></p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+
+    <script>
+        // 鑰匙
+        // 1zTE1mwCxNhqlyOCi4Q0bqeD01uZCb2 - PrvDpNm - VK_E 
+        // https://spreadsheets.google.com/feeds/list/1zTE1mwCxNhqlyOCi4Q0bqeD01uZCb2-PrvDpNm-VK_E/od6/public/values?alt=json
+
+
+        // ajax抓資料進來
+        //這個空陣列是給我們放我們想要的資料結構的
+        var newLOLArray = [];
+        window.onload = function () {
+            let xhr = new XMLHttpRequest();
+            xhr.onload = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    LOLArray = JSON.parse(this.responseText);
+                    // debugger
+                    LOLArray.feed.entry.forEach((item) => {
+                        newLOLArray.push({
+                            name: item.gsx$name.$t,
+                            img: item.gsx$img.$t,
+                            price: item.gsx$price.$t,
+                            information: item.gsx$information.$t
+                        });
+                    })
+                    //執行方法(參數)
+                    LOLcard(newLOLArray);
+                }
+            }
+            xhr.open('GET', 'https://spreadsheets.google.com/feeds/list/1zTE1mwCxNhqlyOCi4Q0bqeD01uZCb2-PrvDpNm-VK_E/od6/public/values?alt=json');
+            xhr.send();
+        }
+        //放模板的地方
+        var row = document.getElementsByClassName('row')[0];
+
+        function LOLcard(el) {
+            //抓模板 複製節點 把資料塞進節點
+            let template = document.getElementById("template");
+            for (let i = 0; i < el.length; i++) {
+                //每跑一次迴圈 加一 讓每個角色都顯示出來
+                let call = "#exampleModalLong" + 1;
+                let Called = "exampleModalLong" + 1;
+                let cloneContent = template.content.cloneNode(true);
+                //創建節點
+                let img = cloneContent.querySelector("img");
+                let h3 = cloneContent.querySelector("h3");
+                let price = cloneContent.querySelector(".price");
+                let button = cloneContent.querySelector("button");
+                //設定id改名稱
+                let fade = cloneContent.querySelector(".fade");
+                let h5 = cloneContent.querySelector("h5");
+                let modelbody = cloneContent.querySelector(".modal-body");
+                let modelp = cloneContent.querySelector(".modalp");
+
+                //改變button的屬性 讓他變成每跑一次迴圈 換下一個角色
+                button.setAttribute("data-target", call);
+                //改變成被button呼叫的事件
+                fade.setAttribute("call", Called);
+
+                h3.innerText = el[i].name;
+                price.innerText = el[i].price+'元';
+                img.setAttribute('src', el[i].img);
+                h5.innerText = el[i].name;
+                modelp.innerHTML = (`角色:${el[i].name} <br> 資訊:${el[i].information}`);
+                row.appendChild(cloneContent);
+            }
+        }
+
+
+    </script>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
