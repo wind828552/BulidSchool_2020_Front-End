@@ -12,7 +12,7 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <style type="text/css">
-        button{
+        button {
             width: 200px;
             height: 100px;
             background-color: white;
@@ -20,22 +20,40 @@
             border: 1px solid rgb(199, 197, 197);
             margin: 5px;
         }
-        h4{
+
+        h4 {
             text-align: center;
+        }
+
+        .menu>button {
+            width: 100px;
+            height: 40px;
+        }
+
+        .menu>button:hover {
+            background-color: black;
+            color: white;
         }
     </style>
 
-    </head>
+</head>
 
 <body>
 
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
+            <div class="col-12">
+                <div id="menu" class="menu text-center">
+                    <button>iPhone11</button>
+                    <button>iPad</button>
+                    <button>Mac</button>
+                </div>
+            </div>
             <div class="col-12 col-md-6 d-flex justify-content-center">
                 <img id="img" src="pic/ipad-hero-unselected-201909_GEO_TW.png" alt="">
-            </div>  
-            
-            <div class="col-12 col-md-6"> 
+            </div>
+
+            <div class="col-12 col-md-6">
                 <div class="item text-center">
                     <h1><strong>購買 iPad</strong></h1>
                     <p>購買 iPad 可享免額外付費運送服務</p>
@@ -43,9 +61,12 @@
                 <div class="item">
                     <h4 class="text-center"><strong>外觀</strong></h4>
                     <div class="d-flex justify-content-center">
-                        <button id="gray"><i class="fas fa-circle d-block" style="color: gray; font-size: 30px;"></i>太空灰色</button>
-                        <button id="silver"><i class="fas fa-circle d-block" style="color: silver; font-size: 30px"></i>銀色</button>
-                        <button id="golden"><i class="fas fa-circle d-block" style="color: pink; font-size: 30px"></i>玫瑰金色</button>
+                        <button id="gray"><i class="fas fa-circle d-block"
+                                style="color: gray; font-size: 30px;"></i>太空灰色</button>
+                        <button id="silver"><i class="fas fa-circle d-block"
+                                style="color: silver; font-size: 30px"></i>銀色</button>
+                        <button id="golden"><i class="fas fa-circle d-block"
+                                style="color: pink; font-size: 30px"></i>玫瑰金色</button>
                     </div>
                 </div>
                 <div class="item">
@@ -65,91 +86,111 @@
                         <p id="connectprice" style="font-size: 20px;">$0</p>
                     </div>
                 </div>
-            </div>  
+            </div>
         </div>
     </div>
 
     <script>
 
         var product = {
-            ipad:{
-                    colors:[
-                        { color: "gray" , url:"pic/ipad-cell-select-space-201909_GEO_TW.png" },
-                        { color: "silver" , url:"pic/ipad-cell-select-silver-201909_GEO_TW.png" },
-                        { color: "golden" , url:"pic/ipad-cell-select-gold-201909_GEO_TW.png" }
-                    ],
-                    // capacitys:[
-                    //     { capacity: "32G" , money:"10900" },
-                    //     { capacity: "128G" , money:"13900" }
-                    // ],
-                    // connects:[
-                    //     { connect:"Wifi" , money:"13900" },
-                    //     { connect:"Mobilenetwork" , money:"18400" }
-                    // ],
-                }
-            };
-            // ------------------------灰色-------------------------------
-            //取得按鈕的控制 
-            var btngray = document.getElementById("gray");
-            //當我點下這個按鈕的時候 去執行底下changeimg()的方法 執行圖片置換
-            btngray.onclick = 
-            function changeimg(){
+            iPhone: {
+                colors: [
+                    { color: "white", url: "pic/iphone11-white-select-2019.png" },
+                    { color: "black", url: "pic/iphone11-black-select-2019.png" },
+                    { color: "red", url: "pic/iphone11-red-select-2019.png" }
+                ],
+                price: [
+                    { capacity: "64G", money: "24900" },
+                    { capacity: "128G", money: "26900" },
+                    { capacity: "256G", money: "30400" }
+                ],
+            },
+            ipad: {
+                colors: [
+                    { color: "gray", url: "pic/ipad-cell-select-space-201909_GEO_TW.png" },
+                    { color: "silver", url: "pic/ipad-cell-select-silver-201909_GEO_TW.png" },
+                    { color: "golden", url: "pic/ipad-cell-select-gold-201909_GEO_TW.png" }
+                ],
+                price: [
+                    { capacity: "32G", connect: "Mobilenetwork", money: "13900" },
+                    { capacity: "128G", connect: "Mobilenetwork", money: "18400" }
+                ],
+            },
+            Mac: {
+                colors: [
+                    { color: "gray", url: "pic/ipad-cell-select-space-201909_GEO_TW.png" },
+                    { color: "silver", url: "pic/ipad-cell-select-silver-201909_GEO_TW.png" },
+                    { color: "golden", url: "pic/ipad-cell-select-gold-201909_GEO_TW.png" }
+                ],
+                price: [
+                    { capacity: "32G", connect: "Mobilenetwork", money: "13900" },
+                    { capacity: "128G", connect: "Mobilenetwork", money: "18400" }
+                ],
+            }
+        };
+        function Geturl(key) {
+            //宣告變數裝結果值
+            let result;
+            //路徑 用forEach一個一個傳進來做比較
+            product.ipad.colors.forEach((e) => {
+                if (e.color == key)
+                    result = e.url
+            })
+            return result;
+        }
+        // ------------------------灰色-------------------------------
+        //取得按鈕的控制 
+        var btngray = document.getElementById("gray");
+        //當我點下這個按鈕的時候 去執行底下changeimg()的方法 執行圖片置換
+        btngray.onclick =
+            function changeimg() {
                 //取得img的的控制
                 var img = document.getElementById("img");
                 //對圖片進行設定更新 ('屬性','值') 值裡面再塞一個方法 根據我的規定去尋找要更新的東西
-                img.setAttribute('src',Geturl('gray'));
+                img.setAttribute('src', Geturl('gray'));
             }
-            // var urlresult = product.ipad.colors[0].url;
-            //方法傳入key值 如果key等於color 就回傳所要的值
-            function Geturl(key){
-                //宣告變數裝結果值
-                let result;
-                //路徑 用forEach一個一個傳進來做比較
-                product.ipad.colors.forEach((e)=>{
-                    if(e.color == key ) 
-                    result = e.url
-                })
-                return result;
-            }
-            //--------------------銀色---------------------------
-            var btnsilver = document.getElementById('silver');
-            btnsilver.onclick = 
-            function changeimg(){
+        // var urlresult = product.ipad.colors[0].url;
+        //方法傳入key值 如果key等於color 就回傳所要的值
+
+        //--------------------銀色---------------------------
+        var btnsilver = document.getElementById('silver');
+        btnsilver.onclick =
+            function changeimg() {
                 var img = document.getElementById('img');
-                img.setAttribute('src',Geturl('silver'));
+                img.setAttribute('src', Geturl('silver'));
             }
 
-            function Geturl(key){
-                let result;
-                product.ipad.colors.forEach((e)=>{
-                    if(e.color == key) result = e.url
-                })
-                return result;
-            }
-            //----------------------金色--------------------------
-            var btnsilver = document.getElementById('golden');
-            btnsilver.onclick = 
-            function changeimg(){
+        // function Geturl(key){
+        //     let result;
+        //     product.ipad.colors.forEach((e)=>{
+        //         if(e.color == key) result = e.url
+        //     })
+        //     return result;
+        // }
+        //----------------------金色--------------------------
+        var btnsilver = document.getElementById('golden');
+        btnsilver.onclick =
+            function changeimg() {
                 var img = document.getElementById('img');
-                img.setAttribute('src',Geturl('golden'));
+                img.setAttribute('src', Geturl('golden'));
             }
 
-            function Geturl(key){
-                let result;
-                product.ipad.colors.forEach((e)=>{
-                    if(e.color == key) result = e.url
-                })
-                return result;
-            }
-            //----------------------------------------------
-            var connectprice = document.getElementById('connectprice');
+        // function Geturl(key){
+        //     let result;
+        //     product.ipad.colors.forEach((e)=>{
+        //         if(e.color == key) result = e.url
+        //     })
+        //     return result;
+        // }
+        //----------------------------------------------
+        var connectprice = document.getElementById('connectprice');
 
-            function wifi(){
-                connectprice.innerHTML = "$13900";
-            }
-            function mobilenetwork(){
-                connectprice.innerHTML = "$18400";
-            }
+        function wifi() {
+            connectprice.innerHTML = "$13900";
+        }
+        function mobilenetwork() {
+            connectprice.innerHTML = "$18400";
+        }
 
     </script>
 

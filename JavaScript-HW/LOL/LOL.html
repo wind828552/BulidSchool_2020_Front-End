@@ -28,7 +28,7 @@
                 <h3 class="card-title"></h3>
                 <p class="price"></p>
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
-                    按我
+                    摸我
                 </button>
 
                 <!-- Modal -->
@@ -44,7 +44,6 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
                             </div>
                         </div>
                     </div>
@@ -99,7 +98,7 @@
                 let img = cloneContent.querySelector("img");
                 let h3 = cloneContent.querySelector("h3");
                 let price = cloneContent.querySelector(".price");
-                let button = cloneContent.querySelector("button");
+                let button = cloneContent.querySelector(".btn");
                 //設定id改名稱
                 let fade = cloneContent.querySelector(".fade");
                 let h5 = cloneContent.querySelector("h5");
@@ -109,7 +108,7 @@
                 //改變button的屬性 讓他變成每跑一次迴圈 換下一個角色
                 button.setAttribute("data-target", call);
                 //改變成被button呼叫的事件
-                fade.setAttribute("call", Called);
+                fade.setAttribute("id", Called);
 
                 h3.innerText = el[i].name;
                 price.innerText = el[i].price+'元';

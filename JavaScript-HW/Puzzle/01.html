@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+
+    <script>
+        //打亂圖片方法
+        function fun(){
+        var x = [];
+        var y ;
+        for(var i=1;i<10;i  ){
+        var div = document.getElementById("d" i "");
+        div.removeChild(document.getElementById("img" i ""));
+        }
+        for(var i=1;i<10;i  ){
+        var img = document.createElement('img'); //動態建立img標籤
+        var div1 = document.getElementById("d" i "");
+        var p = [1,2,3,4,5,6,7,8,9];　　　　//用p[]陣列儲存圖片的代號
+        var j = Math.round(Math.random()*8);　　//通過隨機數j產生隨機圖片代號p[j]
+        for ( var u=0 ; u < x.length ; u   ) //遍歷x[]陣列防止後面出現與前面一樣的圖片代號
+        　　{ 
+        　　if ( x[u] == p[j] ) 
+        　　{ 
+        　　 y = x[u];
+        break;
+        　　} 
+        　　}
+        if(p[j]==y){
+        i-=1;
+        continue; 
+        }else{
+        img.setAttribute("src","images/tiger_0" p[j] ".gif");
+        img.id = "img" i "";
+        }
+        div1.appendChild(img);
+        x.push(p[j]); //新增已經出現的圖片號數進入x[]陣列
+        }
+        dragdrop();//拖動圖片方法
+        }
+        </script>
+</body>
+</html>

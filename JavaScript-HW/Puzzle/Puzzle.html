@@ -1,56 +1,124 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <style type="text/css">
-    *{
-        margin: 0;
-        padding: 0;
-        list-style: none;
-    }
-        #wrap{
-            width: 460px;
-            height: 460px;
-            border: 5px solid black;
+        .col {
+            position: relative;
         }
-        .block{
-            width: 150px;
-            height: 150px;
-            border: 1px solid;
-            float: left;
-            overflow: hidden;
-            /* background-color: aqua; */
+
+        .col>canvas {
+            position: absolute;
         }
-        /* #pic{
-            margin-left: -150px;
-        } */
     </style>
-
 </head>
-<body>
-    <button>我來亂的</button>
-    <button>我來整理的</button>
-    <hr>
-    <div id="wrap">
 
-        <!-- <div><img src="pic/9f634e42bbb2438c4e278c4c2feb16ed-600x600.jpg" alt=""></div> -->
+<body>
+
+
+    <div class="container">
+        <div class="row">
+            <button id="button" class="btn btn-dark">我來亂的</button>
+            <button id="button" class="btn btn-dark">我來整理的</button>
+            <div class="col" id="col">
+
+            </div>
+        </div>
     </div>
-    <img src="https://picsum.photos/450/450/?random=1" id =pic>
+
+    <!-- <img src="./puzzle.jpg" alt=""> -->
+
     <script>
-        for(let i =0 ; i<9; i++)
-        {
-            // $('#wrap').append(`<div class = 'block' id = pic${i} ></div>`);
-            $('#wrap').append(` <div class = 'block' id = pic${i}><img src="https://picsum.photos/450/450/?random=1"></div>`)
-            let row = parseInt(i/3);
-            let col = i%3;
-            $(`#pic${i} img`).css('margin-left',col*-150+1).css('margin-top',row*-150+1);
+        var randomimg = document.getElementById('button');
+        randomimg.addEventListener('click', randomimg)
+        var puzzlediv = document.getElementById('col');
+        var puzzleimg = new Image();
+        var blank = new Image();
+        puzzleimg.src = "./puzzle.jpg";
+        blank.src = "./white.png";
+        // var p_height = puzzleimg.height / change;
+        // var p_width = puzzleimg.width / change;
+
+
+
+        puzzleimg.onload = function () {
+            add();
         }
-        $('#pic0 img').remove();
+        //切圖片
+        function add() {
+            //使用變數裝格數
+            let change = 3;
+            //每一小格的寬跟高是多少
+            let p_height = puzzleimg.height / change;
+            let p_width = puzzleimg.width / change;
+
+            //長拼圖
+            for (let i = 0; i < change; i++) {
+
+                for (let j = 0; j < change; j++) {
+                    let canvas = document.createElement("canvas");
+                    canvas.setAttribute('style', `top:${i * p_height}px; left:${j * p_width}px;`);
+                    canvas.height = p_height;
+                    canvas.width = p_width;
+                    //告訴她是一個平面的畫布
+                    var context = canvas.getContext("2d");
+                    if (i == 0 && j == 0) {
+                        //     //參數1:圖片來源，參數2.3:起始位置(x,y)，參數4.5:起始位置開始計算取圖片的長跟寬是多少
+                        //     //把抓到的圖片的大小放到容器裡
+                        //     //參數6.7:canvas的起始位置開始放，參數8.9:放到多大的格子
+                        context.drawImage(blank, j * p_width, i * p_height, p_width, p_height, 0, 0, p_width, p_height);
+                        canvas.classList.add("blank");
+                    }
+                    else {
+                        context.drawImage(puzzleimg, j * p_width, i * p_height, p_width, p_height, 0, 0, p_width, p_height);
+                        canvas.classList.add("puzzleimg");
+                    }
+                    canvas.addEventListener('click', changeimg);
+                    puzzlediv.appendChild(canvas);
+                }
+            }
+        }
+
+        function changeimg() {
+            let b_top = document.getElementsByClassName('blank')[0].style.top[0];
+            let b_left = document.getElementsByClassName('blank')[0].style.left[0];
+            let p_top = this.style.top[0];
+            let p_left = this.style.left[0];
+            if (((p_top == b_top) && Math.abs(p_left-b_left) == 1) || ((p_left == b_left) && Math.abs(p_top-b_top) == 1)) {
+                var x = document.getElementsByClassName("blank")[0].style.cssText;
+                document.getElementsByClassName("blank")[0].style.cssText = this.style.cssText;
+                this.style.cssText = x;
+            }
+        }
+
+        //打亂
+        function randomimg() {
+            Math.floor(Math.random()*10);
+        }
+
     </script>
 
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 </body>
+
 </html>

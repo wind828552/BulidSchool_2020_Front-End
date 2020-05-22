@@ -10,42 +10,40 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <style type="text/css">
+        .Y-M-operation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .months .years {
+            font-size: 25px;
+        }
+
+        th {
+            width: 200px;
+            height: 40px;
+            text-align: center;
+        }
+
+        td {
+            width: 200px;
+            height: 80px;
+            padding-bottom: 50px;
+            padding-left: 5px;
+            font-size: 20px;
+        }
+
+        .time {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+        }
+    </style>
+
 </head>
-<style type="text/css">
-    .Y-M-operation {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .months {
-        font-size: 25px;
-    }
-
-    .years {
-        font-size: 25px;
-    }
-
-    th {
-        width: 200px;
-        height: 40px;
-        text-align: center;
-    }
-
-    td {
-        width: 200px;
-        height: 80px;
-        padding-bottom: 50px;
-        padding-left: 5px;
-        font-size: 20px;
-    }
-
-    .time {
-        display: flex;
-        flex-direction: column;
-        text-align: center;
-    }
-</style>
 
 <body>
 
@@ -68,7 +66,7 @@
                     <button class="btn" onclick="on()"><i class="fas fa-chevron-left"></i></button>
                     <div class="time">
                         <span class="years" id="years">2020年</span>
-                        <span class="months" id="months">4月</span>
+                        <span class="months" id="months">5月</span>
                     </div>
                     <button class="btn" onclick="under()"><i class="fas fa-chevron-right"></i></button>
                 </div>
@@ -151,6 +149,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">新增行程</h5>
+                    <label id="time"></label>
                 </div>
                 <div class="modal-body">
                     <div>
@@ -159,15 +158,6 @@
                                 <span class="input-group-text" id="inputGroup-sizing-default">標題</span>
                             </div>
                             <input type="text" id="titleinput" aria-label="Default"
-                                aria-describedby="inputGroup-sizing-default">
-                        </div>
-                    </div>
-                    <div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="inputGroup-sizing-default">時間</span>
-                            </div>
-                            <input type="text" aria-label="Default"
                                 aria-describedby="inputGroup-sizing-default">
                         </div>
                     </div>
@@ -190,19 +180,16 @@
 
 
     <script>
-        //抓現在的年跟月
+        var time = document.getElementById('time');
         var getyears = new Date().getFullYear();
         var getmonths = new Date().getMonth();
-        //抓今年 年月的1號是星期幾
-        var getstart = new Date(getyears, getmonths, 1).getDay();//抓到了2020年5月1號(現在時間)並對他做 1號是禮拜幾 指派給getstart getday()方法可返回表示星期的某一天的数字
-        //抓這個月有幾天
-        var getdays = new Date(getyears, getmonths + 1, 0).getDate()
+        var getstart = new Date(getyears, getmonths, 1).getDay();
+        var getdays = new Date(getyears, getmonths + 1, 0).getDate();
         var tds = document.querySelectorAll("td");
         var months = document.getElementById("months");
         var years = document.getElementById("years");
         const monthName = ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"];
-        months.innerText = monthName[getmonths]
-        var clickday;
+        // months.innerText = monthName[getmonths]
 
         //按下button執行換下一個年或月
         function under() {
@@ -221,13 +208,14 @@
             getdays = new Date(getyears, getmonths + 1, 0).getDate(); //最後一天再加1 如果是4月30天 月份+1等於5月0天
             deldate(); //清空原本日期
             date(); //日期重新長出(每當要跳一個月時 就清空 再長出)
-
         }
+
+
         //按下button執行更換前一個年或月 
         //同上解釋
         function on() {
-            if (getmonths == 0) { 
-                getmonths = 11; 
+            if (getmonths == 0) {
+                getmonths = 11;
                 months.innerText = monthName[getmonths];
                 getyears--;
                 years.innerText = `${getyears}年`;
@@ -236,52 +224,78 @@
                 getmonths--;
                 months.innerText = monthName[getmonths];
             }
-            getstart = new Date(getyears, getmonths, 1).getDay(); 
-            getdays = new Date(getyears, getmonths + 1, 0).getDate(); 
-            deldate(); 
-            date(); 
+            getstart = new Date(getyears, getmonths, 1).getDay();
+            getdays = new Date(getyears, getmonths + 1, 0).getDate();
+            deldate();
+            date();
         }
-        
+
         //長出日期
         function date() {
             for (let i = 1; i <= getdays; i++) {  //利用for迴圈長日期
                 tds[getstart].innerText = i; //把i從tds[]抓的第一天開始塞進去到
-                // tds[getstart].innerText = '';
-                let key = `${getyears},${getmonths},${i}` //把抓到的年月日指派給key
-                
-                if (localStorage.getItem(key) != null) { //如果key不等於null
-                    let items = localStorage.getItem(key); //把key取出來給items 索引的value
-                    let event = JSON.parse(items); //原本的key是字串 不太好做事 所以利用轉JSON檔的方式轉成陣列物件 讓我們方便使用for迴圈
-                    let ul = document.createElement('ul');
+                tds[getstart].setAttribute('item', `${getyears},${getmonths},${i}`) //設定屬性
+                // let key = tds[getstart].getAttribute('item', `${getyears},${getmonths},${i}`);
 
-                    for (let j = 0; j < event.length; j++) { //取出來後 如果j<key長度 這段是讓我們顯示新增的行程
-                        let li = document.createElement('li'); //創建p 放行程
-                        li.innerText = event[j].title; //把key的title標題名稱顯示出來
-                        ul.appendChild(li);
-                        tds[getstart].appendChild(ul); //再把p給tds
-                    }
-                }
-                tds[getstart].setAttribute('class', `${getyears},${getmonths},${i}`) //設定屬性
-                tds[getstart].onclick = function () { //當點下日期時執行新增程式的fruntion
-                clickday = this.textContent; 
-                $('#New-itinerary').modal('show'); //Bootstrap 為了讓新增行程的視窗跳出來
-                }
+                // if (localStorage.getItem(key) != null) { //如果key不等於null
+                //     let items = localStorage.getItem(key); //把key取出來給items 索引的value
+                //     console.log(items);
+                //     let event = JSON.parse(items); //原本的key是字串 不太好做事 所以利用轉JSON檔的方式轉成陣列物件 讓我們方便使用for迴圈
+                //     let ul = document.createElement('ul');
+
+                //     for (let j = 0; j < event.length; j++) { //取出來後 如果j<key長度 這段是讓我們顯示新增的行程
+                //         let li = document.createElement('li'); //創建p 放行程
+                //         li.innerText = event[j].title; //把key的title標題名稱顯示出來
+                //         ul.appendChild(li);
+                //         tds[getstart].appendChild(ul); //再把p給tds
+                //     }
+                // }
+                
+
+                // tds[getstart].onclick = function () { //當點下日期時執行新增程式的fruntion
+                //     let currentDate = [];
+                //     currentDate = this.getAttribute('item').split(',');
+                //     time.setAttribute('time',this.getAttribute('item'));
+                //     console.log(time);
+                //     $('#New-itinerary').modal('show'); //Bootstrap 為了讓新增行程的視窗跳出來
+                // }
                 getstart++;
-            } 
-            getstart = new Date(getyears, getmonths, 1).getDay(); //
-            
+            }
+            // getstart = new Date(getyears, getmonths, 1).getDay();
         }
-        date();
+        date();//進入網頁後長出日期
 
         //清空
-        function deldate() { 
-            for (let i = 0; i < tds.length; i++) { 
+        function deldate() {
+            for (let i = 0; i < tds.length; i++) {
                 tds[i].innerText = "";  //清空日期
                 tds[i].removeAttribute('item'); //清空屬性
                 tds[i].onclick = null; //清空事件
             }
         }
 
+        //儲存
+        function Store() {
+            let titleinput = document.getElementById("titleinput").value; //抓標題
+            let contentinput = document.getElementById("contentinput").value; //抓內容
+            let data = { "title": titleinput, "content": contentinput }; //把標題跟內容寫成 陣列的物件
+            console.log(key);
+            // debugger
+            if (localStorage.getItem(key) == null) {
+                datalist.push(data);
+            }
+            else {
+                let datalist = JSON.parse(localStorage.getItem(key));
+                //datalist 是個ARRAy
+                datalist.push(data);
+            }
+            localStorage.setItem(key, JSON.stringify(datalist));
+            date()
+        }
+
+
+
+        
         // function Store() {
         //     let titleinput = document.getElementById("titleinput").value; //抓標題
         //     let contentinput = document.getElementById("contentinput").value; //抓內容
@@ -302,31 +316,6 @@
         //     }
         //     date();
         // }
-
-
-
-
-        function Store() {
-            let titleinput = document.getElementById("titleinput").value; //抓標題
-            let contentinput = document.getElementById("contentinput").value; //抓內容
-            let key = `${getyears},${getmonths},${clickday}`; //key的格式
-            let data = [{ "title": titleinput, "content": contentinput }]; //把標題跟內容寫成 陣列的物件
-            let datalist = [];
-
-            if(localStorage.getItem(key) == null){
-                let data_text = JSON.stringify(data); //localStorage.setItem只能存字串 所以轉成字串
-                localStorage.setItem(key, data_text); // setItem存進去
-                console.log();
-                date();
-            }
-            else{
-                let arraylist = josn.parse(localStorage.getItem(titleinput));
-                arraylist.push(data);
-                datalist = arraylist;
-            }
-
-            date()
-        }
     </script>
 
 
