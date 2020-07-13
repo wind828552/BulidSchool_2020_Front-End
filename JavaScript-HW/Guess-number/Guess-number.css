@@ -1,0 +1,41 @@
+.label {
+    border: 2px solid black;
+    width: 500px;
+    height: 300px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+}
+
+.produce {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 10px 0px;
+}
+
+.produce input {
+    width: 300px;
+}
+
+.number1,.number2,.number3,.number4 {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5px;
+}
+
+button {
+    margin: 0px 5px;
+    font-size: 30px;
+    background-color: white;
+    color: black;
+    
+}
+
+input {
+    font-size: 30px;
+}

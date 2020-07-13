@@ -5,51 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style type="text/css">
-        .label {
-            border: 2px solid black;
-            width: 500px;
-            height: 300px;
-            margin: auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 30px;
-        }
-
-        .produce {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            margin: 10px 0px;
-        }
-
-        .produce input {
-            width: 300px;
-        }
-
-        .number1,.number2,.number3,.number4 {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 5px;
-        }
-
-        button {
-            margin: 0px 5px;
-            font-size: 30px;
-            background-color: white;
-            color: black;
-            
-        }
-
-        input {
-            font-size: 30px;
-        }
-    </style>
-
-
+    <link rel="stylesheet" href="Guess-number.css">
 </head>
 
 <body>
@@ -62,7 +18,7 @@
 
     <div class="produce">
         <button id="start" onclick="_getRandom()">產生數字</button>
-        <input  id="input" type="text" oninput = "value=value.replace(/[^\d]/g,'')">
+        <input id="input" type="text" oninput="value=value.replace(/[^\d]/g,'')">
     </div>
     <div class="number1">
         <button class="btn" onclick="number(this)">1</button>
@@ -85,67 +41,7 @@
         <button class="btn" onclick="sure()">V</button>
     </div>
 
-
-<script>
-    var start = document.getElementById("start");
-    var input = document.getElementById('input');
-    var label = document.getElementById("label");
-    var buttons = document.getElementsByClassName("btn");
-    var getRandom;
-    var min = 0;
-    var max = 100;
-
-    for (var btn of buttons) {
-        btn.setAttribute('disabled', 'disabled');
-    }
-    //產生亂數的方法
-    function _getRandom() {
-        getRandom = Math.floor(Math.random() * 100);
-        alert("產生數字了");
-        start.setAttribute('disabled', 'disabled');
-        for (var btn of buttons) {
-        btn.removeAttribute('disabled', 'disabled');
-    }
-    }
-
-    //輸入數字
-    function number(values) {
-        input.value += values.innerText;
-    }
-
-    function del() {
-        input.value = "";
-    }
-
-    //判斷
-    function sure(){
-        let inputnumber = parseInt(input.value);
-        if(inputnumber > min && inputnumber < max){
-            if(getRandom == inputnumber){
-            alert("恭喜過關");
-            label.innerText = min + "~" + max;
-            min = 0; 
-            max = 100;
-            start.removeAttribute('disabled', 'disabled');
-            for (var btn of buttons) {
-                btn.setAttribute('disabled', 'disabled');
-            }
-        }
-            else if(getRandom > inputnumber && inputnumber > min){
-            min = inputnumber;
-            }
-            else if(getRandom < inputnumber && inputnumber < max){
-            max = inputnumber;
-            }
-        }
-        else{
-            alert("請輸入範圍內的數字")
-        }
-        label.innerText = min + "~" + max;
-        input.value = "";
-    }
-</script>
-
+    <script src="Guess-number.js"></script>
 </body>
 
 </html>

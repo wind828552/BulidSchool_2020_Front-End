@@ -74,8 +74,11 @@
         </tr>
     </table>
 
-        <script>
 
+        <script>
+            var txt = document.getElementById("txt");
+            var strOper = 0;
+            
             //歸零
             function zero(){
                 txt.value = "";
@@ -86,9 +89,6 @@
                 txt.value = txt.value.substr(0,txt.value.length-1);
             }
 
-
-            var txt = document.getElementById("txt");
-            var strOper = 0;
             function number(str){
                 if( txt.value.length == 0 && str == "."){
                     txt.value += "0.";
@@ -115,8 +115,8 @@
                 strOper=str;
                 //按完運算符號會等於0
                 txt.value = "";
-
             }
+            
             function equal(){
                 switch(strOper){
                     case '+':
@@ -134,12 +134,9 @@
                     default:
                         break;
                 }
-
                 temp = null;
                 strOper=null;
-
             }
-
         </script>
 
 </body>
