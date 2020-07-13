@@ -43,15 +43,15 @@ div[class*='col']{
     height: 50px;
     background-color: aqua;
     color: white;
-
-}
-.history-container .history-txt .button a{
-    text-decoration: none;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 15px;
 }
+.history-container .history-txt .button a{
+    text-decoration: none;
+    font-size: 18px;
+}
+
 
 
 /* 手機 */

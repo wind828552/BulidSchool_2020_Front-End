@@ -1,7 +1,5 @@
 .building-container{
     width: 100%;
-    /* margin: auto; */
-
 }
 .building-container .row{
     display: flex;
@@ -14,12 +12,7 @@
 }
 .building-container .row .building-pic{
     position: relative;
-    /* transform-style: preserve-3d;
-    transition: transform 0.5s ; */
 }
-/* .building-container .row .building-pic:hover{
-    transform: rotate(180deg);
-} */
 .building-container .row .building-pic img{
     width: 100%;
     height: 358px;

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -41,7 +42,7 @@
 
     <table>
         <tr>
-            <td colspan="4"><input id="txt" type="text" value="0"></td>
+            <td colspan="4"><input id="txt" type="text" value=""></td>
         </tr>
         <tr>
             <td colspan="2"><button class="btn_click" value="AC" onclick="zero()">AC</button></td>
@@ -77,7 +78,7 @@
 
             //歸零
             function zero(){
-                txt.value = "0";
+                txt.value = "";
             }
             //退格建
             function del(){
@@ -89,9 +90,10 @@
             var txt = document.getElementById("txt");
             var strOper = 0;
             function number(str){
-
-                if( str == "." && !txt.value.includes(".")){
-                    console.log(txt.value);
+                if( txt.value.length == 0 && str == "."){
+                    txt.value += "0.";
+                }
+                else if( str == "." && !txt.value.includes(".")){
                     txt.value += ".";
                 }
                 else if(str != '.'){
@@ -112,7 +114,7 @@
                 //然後再把運算符號存進strOper
                 strOper=str;
                 //按完運算符號會等於0
-                txt.value = "0";
+                txt.value = "";
 
             }
             function equal(){
