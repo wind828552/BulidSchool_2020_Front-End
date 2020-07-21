@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://kit.fontawesome.com/57b8d30415.js" crossorigin="anonymous"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <style type="text/css">
+        .Y_M_operation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .time {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .months,
+        .years {
+            font-size: 20px;
+        }
+
+        table {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .week {
+            display: flex;
+        }
+
+        th {
+            width: 100%;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .date tr {
+            display: flex;
+            justify-content: center;
+            height: 80px;
+        }
+
+        td {
+            border: 1px solid rgb(93, 168, 218);
+            width: 100%;
+            height: 100%;
+        }
+
+        .blue {
+            background-color: rgb(164, 206, 240);
+        }
+    </style>
+
+</head>
+
+<body>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="Y_M_operation">
+                    <button class="btn" onclick="on()"><i class="fas fa-chevron-left"></i></button>
+                    <div class="time">
+                        <span class="years" id="years">2020年</span>
+                        <span class="months" id="months">July</span>
+                    </div>
+                    <button class="btn" onclick="under()"><i class="fas fa-chevron-right"></i></button>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr class="week">
+                            <th>SUN</th>
+                            <th>MON</th>
+                            <th>TUE</th>
+                            <th>WED</th>
+                            <th>THU</th>
+                            <th>FRI</th>
+                            <th>SAT</th>
+                        </tr>
+                    </thead>
+                    <tbody class="date">
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr class="blue">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr class="blue">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr class="blue">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label class="badge badge-primary" role="alert" for="title"
+                                class="col-form-label">Title：</label>
+                            <input type="text" class="form-control" id="title">
+                        </div>
+                        <div class="form-group">
+                            <label class="badge badge-primary" role="alert" for="message"
+                                class="col-form-label">Message:</label>
+                            <textarea class="form-control" id="message"></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button onclick="save()" id="save" class="btn btn-primary">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        //抓現在的年跟月
+        var getyears = new Date().getFullYear();
+        var getmonths = new Date().getMonth();
+        // console.log(getyears);
+        //抓第一天與最後一天 長日期
+        var firstDay = new Date(getyears, getmonths, 1).getDay();
+        var lastday = new Date(getyears, getmonths + 1, 0).getDate();
+        var tds = document.querySelectorAll("td");
+        //切換上下月
+        var years = document.getElementById("years");
+        var months = document.getElementById("months");
+        var monthName = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+        // var save = document.getElementById('save');
+
+        //長日期
+        function date() {
+            for (let i = 1; i <= lastday; i++) {
+                tds[firstDay].innerText = i;
+                tds[firstDay].setAttribute('style', 'cursor:pointer');
+                tds[firstDay].setAttribute('data-toggle', 'modal');
+                tds[firstDay].setAttribute('data-target', '#exampleModal');
+                tds[firstDay].setAttribute('item', `${getyears},${getmonths},${i}`);//設定屬性
+                // var key = tds[firstDay].getAttribute('item', `${getyears},${getmonths},${i}`);
+
+
+                firstDay++;
+            }
+
+        }
+        date();
+
+        function save() {
+            let title = document.getElementById('title').value;
+            let message = document.getElementById('message').value; //抓內容
+            
+            let datalist = []; 
+            let data = { title: message };
+            datalist.push(data);
+            let dat_text = JSON.stringify(datalist);
+            let currentDate = [];
+            currentDate = this.getAttribute('item').split(',');
+            localStorage.setItem(currentDate, data_text);
+
+        }
+
+        //切換上下月
+        function on() {
+            if (getmonths == 0) {
+                getmonths = 11;
+                months.innerText = monthName[getmonths];
+                getyears--;
+                years.innerText = getyears;
+            }
+            else {
+                getmonths--;
+                months.innerText = monthName[getmonths];
+            }
+            for (let i = 0; i < tds.length; i++) {
+                tds[i].innerText = "";  //清空日期
+                tds[i].removeAttribute('style', 'cursor:pointer');
+                tds[i].removeAttribute('data-toggle', 'modal');
+                tds[i].removeAttribute('data-target', '#exampleModal');
+                tds[i].removeAttribute('item', `${getyears},${getmonths},${i}`);
+            }
+            firstDay = new Date(getyears, getmonths, 1).getDay();
+            lastday = new Date(getyears, getmonths + 1, 0).getDate();
+            date();
+        }
+        function under() {
+            if (getmonths == 11) {
+                getmonths = 0;
+                months.innerText = monthName[getmonths];
+                getyears++;
+                years.innerText = getyears;
+            }
+            else {
+                getmonths++;
+                months.innerText = monthName[getmonths];
+            }
+            for (let i = 0; i < tds.length; i++) {
+                tds[i].innerText = "";  //清空日期
+                tds[i].removeAttribute('style', 'cursor:pointer');
+                tds[i].removeAttribute('data-toggle', 'modal');
+                tds[i].removeAttribute('data-target', '#exampleModal');
+                tds[i].removeAttribute('item', `${getyears},${getmonths},${i}`);
+            }
+            firstDay = new Date(getyears, getmonths, 1).getDay();
+            lastday = new Date(getyears, getmonths + 1, 0).getDate();
+            date();
+        }
+
+        //清空
+        // function deldate() {
+        //     for (let i = 0; i < tds.length; i++) {
+        //         tds[i].innerText = "";  //清空日期
+        //         // tds[i].removeAttribute('item'); //清空屬性
+        //         tds[i].onclick = null; //清空事件
+        //     }
+        // }
+    </script>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
